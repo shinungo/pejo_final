@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<title>ConsentIdConfirmer</title>
+<div data-th-replace="fragments/head :: copy"></div>
+<body>
+
+
+<div th:replace="fragments/nav :: copy('consentIdConfirmer')"></div>
+
+
+	<div id="left_half_container">
+		 <h2>ConsentIdConfirmer</h2>
+			<h3>Durch Clicken wird die ConsentID dem confirmationBankLink hinzugefügt.</h3>
+			<h3>Dieses muss im sich neu öffnenden Tab bestätigt werden, so dass ..... </h3>
+		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
+	</br></br>
+	</div>
+	<div id="right_half_container">
+		<h4>Hier die CONSENT ID</h4></br><label th:text="${ConsentID}"></label></br></br></br></br></br>	
+			</div>
+
+    <div th:replace="fragments/footer :: copy"></div>
+    
+
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  
+
+
+SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-
+
+		<label th:text="'ConsentId: ' + ${ConsentID}"></label>
+	<a th:href="${confirmationBanklink}">hier wäre was</a>
+
+
+
+SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-
+
+
+
+
+
+DIES SCHéner MACHEN 
+1. der Link soll in einem Anderen Tab 
+2. Es kommt nochmals ein Link und der Führt nachher zur Übersicht mit den Accounts Balances und so 
+dieser LINK zeigt auf Neue Methode: Bspw. Show Detail Accounts(DIES IST NE METHODE BEI MIR
+
+Mit ConsentID und USER (evtl) Account Details holen. (Was für Account, Währung, Saldo...) 
+
+... wo man Transactions Und Balnaces anzeigen. 
+
+-->		 
+
+

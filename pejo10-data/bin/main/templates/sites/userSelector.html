@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<title>UserChoice</title>
+<div data-th-replace="fragments/head :: copy"></div>
+
+<body>
+
+<div th:replace="fragments/nav :: copy('home')"></div>
+
+	<div id="standardView">
+		<h1>Choose User</h1>
+		<form th:action="@{/getConsentId}" th:object="${userForm}" method="POST">
+
+			<label for="User">Choose a User:</label> 
+			<select th:field="*{name}" name="User"	id="user">
+			
+			
+			<option th:each="user : ${users}"
+                            th:value="${user.name}"
+                            th:utext="${user.name}"/>
+			</select> <br>
+			<br> <input type="submit" value="Submit">
+		</form>
+	</div>
+	  <div th:replace="fragments/footer :: copy"></div>
+</body>
+</html>
