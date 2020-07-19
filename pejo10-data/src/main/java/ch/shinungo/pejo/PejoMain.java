@@ -13,9 +13,7 @@ public class PejoMain {
 		SpringApplication.run(PejoMain.class, args);
 	}
 
-
-	// another 23:36 - ONLY FEH
-	//What Happend?ydfdf  // 23.48
+//EVERY
 	/*
 	 * Metheode getContent sendet Anmeldedaten an Sandbox um ConsentID ("SessionID")
 	 * zu erhalten. - Läuft nun im Consent Id-Controller 01.07.2020
