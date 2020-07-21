@@ -11,6 +11,6 @@ public class PejoMain {
 	}
 	 
 	/*
-	 *   From Final_pejo_Win 
+	 *   From WIN 23.47 
 	 */
 }
