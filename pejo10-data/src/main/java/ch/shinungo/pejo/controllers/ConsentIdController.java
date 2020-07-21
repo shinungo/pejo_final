@@ -41,7 +41,7 @@ public class ConsentIdController {
 	private UserService userService;
 
 	// Methode mit Annotation.. Freitags Hier ist Consent ID-Pfad. 10.07. //
-	// LASSEN!! // nichts
+	// LASSEN!! 
 	@GetMapping({"getConsentId", "/", "/start", "/home"})
 
 	public String showUserSelector(Model model) {
