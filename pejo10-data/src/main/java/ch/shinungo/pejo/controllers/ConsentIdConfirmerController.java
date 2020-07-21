@@ -16,9 +16,13 @@ public class ConsentIdConfirmerController {
 		log.debug("ConsentIdConfirmer direkt angesteuert");
 		return "sites/consentIdConfirmer";
 	}
+	
+	
+	
 
 	/*
-	 * Was soll hier passieren? ConentIdConfirmer Html ist aufgerufen.
+	 * Was soll hier passieren? 
+	 * ConentIdConfirmer Html ist aufgerufen.
 	 * 
 	 * 
 	 */
