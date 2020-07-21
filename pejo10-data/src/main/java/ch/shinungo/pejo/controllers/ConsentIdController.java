@@ -42,7 +42,7 @@ public class ConsentIdController {
 
 	// Methode mit Annotation.. Freitags Hier ist Consent ID-Pfad. 10.07. //
 	// LASSEN!!
-	@GetMapping("getConsentId")
+	@GetMapping({"getConsentId", "/", "/start", "/home"})
 
 	public String showUserSelector(Model model) {
 
@@ -51,6 +51,12 @@ public class ConsentIdController {
 		model.addAttribute("users", userService.getAllUsers());
 		return "sites/userSelector";
 	}
+	
+//	private static final String CONSENT_URL = "https://api.dev.openbankingproject.ch/v1/consents";
+//	private static final Logger log = LoggerFactory.getLogger(PejoMain.class);
+
+	// STARTMETHODE:
+	
 
 //	@RequestMapping(value = "/getConsentId")
 	@PostMapping("getConsentId")
