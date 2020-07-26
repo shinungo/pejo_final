@@ -33,8 +33,25 @@ public class UserService {
 		u1.setName("stephan");
 		u1.getIbans().add("CH9810051000000000055");
 		u1.getIbans().add("CH4410051000000000057");
-
 		users.add(u1);
+
+		User u2 = new User();
+		u2.setName("buha2");
+		u2.getIbans().add("CH2710051000000000072");
+		users.add(u2);
+
+		User u3 = new User();
+		u3.setName("buha3");
+		u3.getIbans().add("CH6510051000000000067");
+		u3.getIbans().add("CH3810051000000000068");
+		u3.getIbans().add("CH1110051000000000069");
+		u3.getIbans().add("CH8110051000000000070");
+		users.add(u3);
+
+		User u4 = new User();
+		u4.setName("buha4");
+		u4.getIbans().add("CH5410051000000000071");
+		users.add(u4);
 
 	}
 
