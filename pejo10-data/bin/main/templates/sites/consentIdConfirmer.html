@@ -17,23 +17,23 @@
 	</div>
 	<div id="right_half_container">
 		<h4>Hier die CONSENT ID</h4></br><label th:text="${ConsentID}"></label></br></br></br></br></br>	
+		
+		
+		
+		<form th:action="@{/postConsent}" th:object="${userForm}" method="POST">
+			<label for="User">Post to GetConsent</label> 
+	
+			<br> <input type="submit" value="Submit">
+		</form>
+		
+		
 			</div>
+
 
     <div th:replace="fragments/footer :: copy"></div>
     
-
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
