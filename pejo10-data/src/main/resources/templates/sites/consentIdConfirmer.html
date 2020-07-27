@@ -13,18 +13,20 @@
 			<h3>Durch Clicken wird die ConsentID dem confirmationBankLink hinzugefügt.</h3>
 			<h3>Dieses muss im sich neu öffnenden Tab bestätigt werden, so dass ..... </h3>
 		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
-	</br></br>
+		</br></br></br>
 	</div>
 	<div id="right_half_container">
-		<h4>Hier die CONSENT ID</h4></br><label th:text="${ConsentID}"></label></br></br></br></br></br>	
+		<h4>Hier die CONSENT ID</h4>
+		</br>
+		<label th:text="${ConsentID}"></label></br></br></br>
 		
 		
-		
+		<label for="User">Verschiedene Möglichkeiten:</label> 
 		<form th:action="@{/postConsent}" th:object="${userForm}" method="POST">
-			<label for="User">Post to GetConsent</label> 
-	
-			<br> <input type="submit" value="Submit">
-		</form>
+			<br> <input type="submit" value="postConsent"></form>
+
+		<form th:action="@{/getAccounts}" th:object="${userForm}" method="POST">
+			<br> <input type="submit" value="getAccounts"></form>
 		
 		
 			</div>
