@@ -40,14 +40,14 @@ public class ConsentIdController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping({"getConsentId", "/", "/start", "/home"})
+	@GetMapping({ "getConsentId", "/", "/start", "/home" })
 
 	public String showUserSelector(Model model) {
 		model.addAttribute("userForm", new UserForm());
 		model.addAttribute("users", userService.getAllUsers());
 		return "sites/userSelector";
 	}
-	
+
 	@PostMapping("getConsentId")
 	public String getConsentId(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
 
@@ -80,6 +80,30 @@ public class ConsentIdController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		return headers;
 	}
+
+	// ***********STOP******STOP******STOP******STOP******STOP***
+	// NEW UNTEN
+
+	/*
+	 * Soll wie soll die Übergabe der Werte erfolgen? Soll ich die Klassen (Bspw.
+	 * instanzieren? Oder
+	 */
+
+	@PostMapping({ "createConsent" })
+	public String createConsent(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
+
+		ConsentResponse consentRespones;
+		model.getAttribute(CONSENT_URL);
+
+		log.debug("Hier sollte PSU-ID sein   " + model.getAttribute("PSU-ID"));
+
+		log.debug("createConsent Pressed");
+		return "sites/consentIdConfirmer";
+
+	}
+
+	// NEW OBEN
+	// ***********STOP******STOP******STOP******STOP******STOP***
 
 	private ConsentRequest getConsentRequest(List<String> ibans) {
 

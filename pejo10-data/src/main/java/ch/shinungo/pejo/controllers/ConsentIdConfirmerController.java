@@ -1,14 +1,21 @@
 package ch.shinungo.pejo.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import ch.shinungo.pejo.form.UserForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 public class ConsentIdConfirmerController {
+
+	public ConsentIdController consentIdController;
 
 	@GetMapping({ "/consentIdConfirmer", "sites/consentIdConfirmer", "/tt" })
 	public String showConsentIdConfirmerHtml() {
@@ -26,15 +33,6 @@ public class ConsentIdConfirmerController {
 	 * 
 	 */
 
-	@PostMapping({ "postConsent" })
-	public String postConsent() {
-		log.debug("post Consent Pressed");
-
-		// wir müssen einen Consent erstellen.
-
-		return "sites/consentIdConfirmer";
-	}
-
 	/*
 	 * GET - ACCOUNTS: (AUS SICHT THYMELEAFE MUSS ES EIN POST SEIN.
 	 * 
@@ -43,9 +41,8 @@ public class ConsentIdConfirmerController {
 	 */
 
 	@PostMapping({ "getAccounts" })
-	public String getAccounts() {
+	public String getAccounts(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
 		log.debug("get Accounts Pressed");
-
 		return "sites/consentIdConfirmer";
 	}
 
