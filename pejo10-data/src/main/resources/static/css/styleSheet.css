@@ -7,10 +7,10 @@ body {
 /* 	 cursor: pointer; */
 }
 
-div#pic {
-margin:0.05em;
-padding:0.05em; 
-
+.pic {
+margin:3.05em;
+padding:5.05em; 
+border: 1px solid #ff3b30;
 }
 
 
