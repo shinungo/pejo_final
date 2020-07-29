@@ -28,6 +28,9 @@
 		<form th:action="@{/getAccounts}" th:object="${userForm}" method="POST">
 			<br> <input type="submit" value="getAccounts"></form>
 		
+		 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
+		 	
+		
 		
 			</div>
 

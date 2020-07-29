@@ -42,8 +42,12 @@ public class ConsentIdConfirmerController {
 
 	@PostMapping({ "getAccounts" })
 	public String getAccounts(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
+
 		log.debug("get Accounts Pressed");
 		return "sites/consentIdConfirmer";
+
+		// x-request und consent it
+
 	}
 
 }

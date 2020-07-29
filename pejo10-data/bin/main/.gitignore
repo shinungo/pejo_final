@@ -1,2 +1,8 @@
-/ch/
 /.DS_Store
+/application.properties
+/ch/
+/favicon.png
+/schema.sql
+/static/
+/templates/
+/favicon.ico

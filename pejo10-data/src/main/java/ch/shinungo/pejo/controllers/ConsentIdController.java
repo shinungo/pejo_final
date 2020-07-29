@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.shinungo.pejo.form.UserForm;
 import ch.shinungo.pejo.model.Access;
 import ch.shinungo.pejo.model.Account;
+import ch.shinungo.pejo.model.AccountResponse;
 import ch.shinungo.pejo.model.Balance;
 import ch.shinungo.pejo.model.ConsentRequest;
 import ch.shinungo.pejo.model.ConsentResponse;
@@ -36,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ConsentIdController {
 
 	private static final String CONSENT_URL = "https://api.dev.openbankingproject.ch/v1/consents";
+	private static final String ACCOUNTS_URL = "https://api.dev.openbankingproject.ch/v1/accounts";
 
 	@Autowired
 	private UserService userService;
@@ -66,14 +69,56 @@ public class ConsentIdController {
 
 		model.addAttribute("confirmationBanklink", respEntity.getBody().getLinks().getScaRedirect().getHref());
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
+		// hier könne User hinzugefüt wewrden
 
 		return "sites/consentIdConfirmer";
 	}
 
-	private HttpHeaders prepareHeaders(User user) {
+	@GetMapping({ "getAccounts" })
+	public String getAccounts2(@RequestParam(value = "consentId", required = true) String consentId)
+			throws JsonProcessingException {
+
+		HttpHeaders headers = prepareHeaders();
+		headers.set("Consent-ID", consentId);
+
+		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<AccountResponse> respEntity = template // HIer Zugriff angefragt.
+				.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq, AccountResponse.class);
+
+		/*
+		 * 29.7.: Call to Account mit Id für jeden Account machen.
+		 * 
+		 * /accounts/{account-id}
+		 * 
+		 * 
+		 * DIES MUSS FèR JEDEN ACCOUTN AUFGERUFEN WERDNE:
+		 * 
+		 * For Each? diese URL aufrufen + die für Jeden Account machen.
+		 * 
+		 * HttpEntity<String> entityReq = new HttpEntity<String>(headers); RestTemplate
+		 * template = new RestTemplate(); ResponseEntity<AccountResponse> respEntity =
+		 * template // HIer Zugriff angefragt. .exchange(ACCOUNTS_URL, HttpMethod.GET,
+		 * entityReq, AccountResponse.class);
+		 * 
+		 * !!! ACCOUTN RESPONSE = STRING!!! JEtzt die Datail holen.
+		 * 
+		 * 
+		 * es muss alle Account mit Loger ausgegebwn erden
+		 * 
+		 */
+
+		// So bekommen wir die AccountID(=ResourceID)
+		// respEntity.getBody().getAccounts().get(1).getResourceId();
+
+		log.debug("Response: " + respEntity.getBody().toString());
+		return "sites/consentIdConfirmer";
+
+	}
+
+	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("X-Request-ID", "99391c7e-ad88-49ec-a2ad-99ddcb1f7721");
-		headers.set("PSU-ID", user.getName()); //
 		headers.set("psu-ip-address", "192.168.0.2"); // IPv4: 192.168.1.5 // Standardgateway 192.168.1.1
 		headers.set("tpp-redirect-uri", "url-class-java-examples");
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -81,29 +126,11 @@ public class ConsentIdController {
 		return headers;
 	}
 
-	// ***********STOP******STOP******STOP******STOP******STOP***
-	// NEW UNTEN
-
-	/*
-	 * Soll wie soll die Übergabe der Werte erfolgen? Soll ich die Klassen (Bspw.
-	 * instanzieren? Oder
-	 */
-
-	@PostMapping({ "createConsent" })
-	public String createConsent(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
-
-		ConsentResponse consentRespones;
-		model.getAttribute(CONSENT_URL);
-
-		log.debug("Hier sollte PSU-ID sein   " + model.getAttribute("PSU-ID"));
-
-		log.debug("createConsent Pressed");
-		return "sites/consentIdConfirmer";
-
+	private HttpHeaders prepareHeaders(User user) {
+		HttpHeaders headers = prepareHeaders();
+		headers.set("PSU-ID", user.getName()); //
+		return headers;
 	}
-
-	// NEW OBEN
-	// ***********STOP******STOP******STOP******STOP******STOP***
 
 	private ConsentRequest getConsentRequest(List<String> ibans) {
 
