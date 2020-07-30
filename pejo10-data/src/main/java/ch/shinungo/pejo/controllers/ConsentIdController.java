@@ -24,8 +24,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.shinungo.pejo.form.UserForm;
 import ch.shinungo.pejo.model.Access;
 import ch.shinungo.pejo.model.Account;
+import ch.shinungo.pejo.model.AccountDetailResponse;
 import ch.shinungo.pejo.model.AccountResponse;
 import ch.shinungo.pejo.model.Balance;
+import ch.shinungo.pejo.model.BalancesResponse;
 import ch.shinungo.pejo.model.ConsentRequest;
 import ch.shinungo.pejo.model.ConsentResponse;
 import ch.shinungo.pejo.model.Transaction;
@@ -46,7 +48,8 @@ public class ConsentIdController {
 	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 	private List<String> ibanList = new ArrayList<String>();
 	private List<String> resourceIdList = new ArrayList<String>();
-	public String singleIban;
+	private String singleResourceID;
+	private String singleIban;
 
 	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
@@ -85,6 +88,8 @@ public class ConsentIdController {
 	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId)
 			throws JsonProcessingException {
 
+		Account accountDetails;
+
 		/*
 		 * 29.7.: Call to Account mit Id für jeden Account machen.
 		 * /accounts/{account-id}
@@ -116,18 +121,17 @@ public class ConsentIdController {
 		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
 		// ibanList.add(respEntity.getBody().getAccounts().get(1).getIban());
 
-		singleIban = respEntity.getBody().getAccounts().get(1).getIban();
-		ibanList.add(singleIban);
+		/*
+		 *
+		 * Hier passiert eine Iteration über alle Accounts. ich brauche Details zu jedem
+		 * account. wieder ein Call für Openbanking API
+		 * 
+		 */
 
-		for (int x = 0; x < ibanList.size(); x++) {
-			if (!respEntity.getBody().getAccounts().get(1).getIban().equals(ibanList)) {
-				log.debug("Der HEADER IST SCHON DA... " + ibanList.get(x));
-			}
-			log.debug("singleIban" + singleIban);
-		}
-
-		for (String temp : ibanList) {
-			log.debug("Hier kommt der TEMP" + temp);
+		for (Account a : respEntity.getBody().getAccounts()) {
+			log.debug(a.getResourceId());
+			accountDetails = getAccountDetails(a, consentId);
+			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 		}
 
 		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
@@ -136,6 +140,7 @@ public class ConsentIdController {
 		// So bekommen wir die AccountID(=ResourceID)
 		// respEntity.getBody().getAccounts().get(1).getResourceId();
 
+		// log.debug("Account_2" + resourceIdList);
 		log.debug("IBAN-Liste mit get All " + getAllIban());
 		log.debug("IBAN-Liste direkt" + ibanList);
 
@@ -144,6 +149,40 @@ public class ConsentIdController {
 		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
 		log.debug("Response: " + respEntity.getBody().toString());
 		return "sites/consentIdConfirmer";
+
+	}
+
+	private List<Balance> getbalancesFromAccount(Account accountDetails, String consentId) {
+		String balancesUrl = accountDetails.getLinks().getBalances().getHref();
+
+		HttpHeaders headers = prepareHeaders();
+		headers.set("Consent-ID", consentId);
+
+		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<BalancesResponse> respEntity = template.exchange(balancesUrl, HttpMethod.GET, entityReq,
+				BalancesResponse.class);
+
+		return respEntity.getBody().getBalances();
+
+		// TODO Auto-generated method stub
+
+	}
+
+	private Account getAccountDetails(Account a, String consentId) {
+		String accountDetailUrl = ACCOUNTS_URL + "/" + a.getResourceId();
+
+		HttpHeaders headers = prepareHeaders();
+		headers.set("Consent-ID", consentId);
+
+		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<AccountDetailResponse> respEntity = template.exchange(accountDetailUrl, HttpMethod.GET,
+				entityReq, AccountDetailResponse.class);
+
+		log.debug("getAccountDetails:  " + respEntity.getBody().getAccount().getResourceId());
+
+		return respEntity.getBody().getAccount();
 
 	}
 

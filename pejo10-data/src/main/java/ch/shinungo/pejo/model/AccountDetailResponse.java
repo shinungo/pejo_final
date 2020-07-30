@@ -10,26 +10,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.Data;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "href" })
-@Data
-public class Balances {
+@JsonPropertyOrder({ "account" })
+public class AccountDetailResponse {
 
-	@JsonProperty("href")
-	public String href;
+	@JsonProperty("account")
+	private Account account;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-	@JsonProperty("href")
-	public String getHref() {
-		return href;
+	@JsonProperty("account")
+	public Account getAccount() {
+		return account;
 	}
 
-	@JsonProperty("href")
-	public void setHref(String href) {
-		this.href = href;
+	@JsonProperty("account")
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	@JsonAnyGetter
