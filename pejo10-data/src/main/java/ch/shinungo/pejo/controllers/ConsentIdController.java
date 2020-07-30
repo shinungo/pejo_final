@@ -44,10 +44,9 @@ public class ConsentIdController {
 	private UserService userService;
 
 	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-	// 30.07.20: Liste für account_id's
-	// Klasse Account_ID erstellt
-//	private List<Account_ID> account_id_lists = new ArrayList<Account_ID>();
-	private List<String> account_id_lists = new ArrayList<String>();
+	private List<String> ibanList = new ArrayList<String>();
+	private List<String> resourceIdList = new ArrayList<String>();
+	public String singleIban;
 
 	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
@@ -105,12 +104,6 @@ public class ConsentIdController {
 		 * 
 		 */
 
-		int anzahlIBANs = 0;
-		for (int i = 0; i < anzahlIBANs; i++) {
-
-		}
-
-		// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
 
@@ -118,19 +111,35 @@ public class ConsentIdController {
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
-		// OBEN FUNKTIONIERT: *****OBEN FUNKTIONIERT: *****OBEN FUNKTIONIERT: *****OBEN
-		// FUNKTIONIERT: *****
 
-		account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
+		// BEGIN: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
+		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
+		// ibanList.add(respEntity.getBody().getAccounts().get(1).getIban());
 
-//		for (String AccountResponse : AccountResponses) {
-//			log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
-//		}
+		singleIban = respEntity.getBody().getAccounts().get(1).getIban();
+		ibanList.add(singleIban);
+
+		for (int x = 0; x < ibanList.size(); x++) {
+			if (!respEntity.getBody().getAccounts().get(1).getIban().equals(ibanList)) {
+				log.debug("Der HEADER IST SCHON DA... " + ibanList.get(x));
+			}
+			log.debug("singleIban" + singleIban);
+		}
+
+		for (String temp : ibanList) {
+			log.debug("Hier kommt der TEMP" + temp);
+		}
+
+		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
+		// FERTIG: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
 		// So bekommen wir die AccountID(=ResourceID)
 		// respEntity.getBody().getAccounts().get(1).getResourceId();
 
-		log.debug("Hier kommt die Liste: " + getAllAccount_id());
+		log.debug("IBAN-Liste mit get All " + getAllIban());
+		log.debug("IBAN-Liste direkt" + ibanList);
+
+		log.debug("Die Klassenvariable" + singleIban);
 
 		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
 		log.debug("Response: " + respEntity.getBody().toString());
@@ -138,17 +147,13 @@ public class ConsentIdController {
 
 	}
 
-	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-	// *** NEU *** NEU *** NEU *** NEU ***
+	// BEGIN: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
-	// gibt mir alle AccountId's aus einer Liste:
-	public List<String> getAllAccount_id() {
-
-		return account_id_lists;
+	public List<String> getAllIban() {
+		return ibanList;
 	}
 
-	// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
-	// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
+	// FERTIG: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();
