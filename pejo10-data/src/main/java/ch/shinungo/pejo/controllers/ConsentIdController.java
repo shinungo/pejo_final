@@ -43,6 +43,14 @@ public class ConsentIdController {
 	@Autowired
 	private UserService userService;
 
+	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
+	// 30.07.20: Liste für account_id's
+	// Klasse Account_ID erstellt
+//	private List<Account_ID> account_id_lists = new ArrayList<Account_ID>();
+	private List<String> account_id_lists = new ArrayList<String>();
+
+	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
+
 	@GetMapping({ "getConsentId", "/", "/start", "/home" })
 
 	public String showUserSelector(Model model) {
@@ -75,24 +83,14 @@ public class ConsentIdController {
 	}
 
 	@GetMapping({ "getAccounts" })
-	public String getAccounts2(@RequestParam(value = "consentId", required = true) String consentId)
+	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId)
 			throws JsonProcessingException {
-
-		HttpHeaders headers = prepareHeaders();
-		headers.set("Consent-ID", consentId);
-
-		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
-		RestTemplate template = new RestTemplate();
-		ResponseEntity<AccountResponse> respEntity = template // HIer Zugriff angefragt.
-				.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq, AccountResponse.class);
 
 		/*
 		 * 29.7.: Call to Account mit Id für jeden Account machen.
-		 * 
 		 * /accounts/{account-id}
 		 * 
-		 * 
-		 * DIES MUSS FèR JEDEN ACCOUTN AUFGERUFEN WERDNE:
+		 * DIES MUSS FèR JEDEN ACCOUTN AUFGERUFEN WERDEN:
 		 * 
 		 * For Each? diese URL aufrufen + die für Jeden Account machen.
 		 * 
@@ -103,18 +101,54 @@ public class ConsentIdController {
 		 * 
 		 * !!! ACCOUTN RESPONSE = STRING!!! JEtzt die Datail holen.
 		 * 
-		 * 
 		 * es muss alle Account mit Loger ausgegebwn erden
 		 * 
 		 */
 
+		int anzahlIBANs = 0;
+		for (int i = 0; i < anzahlIBANs; i++) {
+
+		}
+
+		// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
+		HttpHeaders headers = prepareHeaders();
+		headers.set("Consent-ID", consentId);
+
+		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
+				AccountResponse.class);
+		// OBEN FUNKTIONIERT: *****OBEN FUNKTIONIERT: *****OBEN FUNKTIONIERT: *****OBEN
+		// FUNKTIONIERT: *****
+
+		account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
+
+//		for (String AccountResponse : AccountResponses) {
+//			log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
+//		}
+
 		// So bekommen wir die AccountID(=ResourceID)
 		// respEntity.getBody().getAccounts().get(1).getResourceId();
 
+		log.debug("Hier kommt die Liste: " + getAllAccount_id());
+
+		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
 		log.debug("Response: " + respEntity.getBody().toString());
 		return "sites/consentIdConfirmer";
 
 	}
+
+	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
+	// *** NEU *** NEU *** NEU *** NEU ***
+
+	// gibt mir alle AccountId's aus einer Liste:
+	public List<String> getAllAccount_id() {
+
+		return account_id_lists;
+	}
+
+	// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
+	// UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: ***** UNTEN FUNKTIONIERT: *****
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();

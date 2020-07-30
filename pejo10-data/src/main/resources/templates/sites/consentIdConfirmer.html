@@ -22,15 +22,28 @@
 		
 		
 		<label for="User">Bitte Entscheiden Sie:</label> 
-		<form th:action="@{/createConsent}" th:object="${userForm}" method="POST">
-			<br> <input type="submit" value="createConsent"></form>
-
-		<form th:action="@{/getAccounts}" th:object="${userForm}" method="POST">
+	
+<!--  
+	
+		<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
 			<br> <input type="submit" value="getAccounts"></form>
-		
+			
+
 		 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
-		 	
-		
+		 	 	 -->
+		 	 
+
+
+
+
+	<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
+			<br> <input type="submit" value="justAbutton"></form>
+	
+	
+	 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
+	
+	
+	
 		
 			</div>
 
@@ -39,51 +52,3 @@
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--  
-
-
-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-
-
-		<label th:text="'ConsentId: ' + ${ConsentID}"></label>
-	<a th:href="${confirmationBanklink}">hier wäre was</a>
-
-
-
-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-SICHERUNG-
-
-
-
-
-
-DIES SCHéner MACHEN 
-1. der Link soll in einem Anderen Tab 
-2. Es kommt nochmals ein Link und der Führt nachher zur Übersicht mit den Accounts Balances und so 
-dieser LINK zeigt auf Neue Methode: Bspw. Show Detail Accounts(DIES IST NE METHODE BEI MIR
-
-Mit ConsentID und USER (evtl) Account Details holen. (Was für Account, Währung, Saldo...) 
-
-... wo man Transactions Und Balnaces anzeigen. 
-
--->		 
-
-
