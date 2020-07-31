@@ -31,6 +31,7 @@ import ch.shinungo.pejo.model.BalancesResponse;
 import ch.shinungo.pejo.model.ConsentRequest;
 import ch.shinungo.pejo.model.ConsentResponse;
 import ch.shinungo.pejo.model.Transaction;
+import ch.shinungo.pejo.model.Transactions;
 import ch.shinungo.pejo.repository.User;
 import ch.shinungo.pejo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,14 +45,6 @@ public class ConsentIdController {
 
 	@Autowired
 	private UserService userService;
-
-	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-	private List<String> ibanList = new ArrayList<String>();
-	private List<String> resourceIdList = new ArrayList<String>();
-	private String singleResourceID;
-	private String singleIban;
-
-	// NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
 	@GetMapping({ "getConsentId", "/", "/start", "/home" })
 
@@ -91,21 +84,6 @@ public class ConsentIdController {
 		Account accountDetails;
 
 		/*
-		 * 29.7.: Call to Account mit Id für jeden Account machen.
-		 * /accounts/{account-id}
-		 * 
-		 * DIES MUSS FèR JEDEN ACCOUTN AUFGERUFEN WERDEN:
-		 * 
-		 * For Each? diese URL aufrufen + die für Jeden Account machen.
-		 * 
-		 * HttpEntity<String> entityReq = new HttpEntity<String>(headers); RestTemplate
-		 * template = new RestTemplate(); ResponseEntity<AccountResponse> respEntity =
-		 * template // HIer Zugriff angefragt. .exchange(ACCOUNTS_URL, HttpMethod.GET,
-		 * entityReq, AccountResponse.class);
-		 * 
-		 * !!! ACCOUTN RESPONSE = STRING!!! JEtzt die Datail holen.
-		 * 
-		 * es muss alle Account mit Loger ausgegebwn erden
 		 * 
 		 */
 
@@ -117,39 +95,39 @@ public class ConsentIdController {
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
 
-		// BEGIN: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
-		// ibanList.add(respEntity.getBody().getAccounts().get(1).getIban());
-
-		/*
-		 *
-		 * Hier passiert eine Iteration über alle Accounts. ich brauche Details zu jedem
-		 * account. wieder ein Call für Openbanking API
-		 * 
-		 */
-
 		for (Account a : respEntity.getBody().getAccounts()) {
 			log.debug(a.getResourceId());
 			accountDetails = getAccountDetails(a, consentId);
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
+			List<Transactions> getTransactions = getTransactionsfromMB(accountDetails, consentId);
 		}
 
-		// account_id_lists.add(respEntity.getBody().getAccounts().get(1).getResourceId());
-		// FERTIG: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-
-		// So bekommen wir die AccountID(=ResourceID)
-		// respEntity.getBody().getAccounts().get(1).getResourceId();
-
 		// log.debug("Account_2" + resourceIdList);
-		log.debug("IBAN-Liste mit get All " + getAllIban());
-		log.debug("IBAN-Liste direkt" + ibanList);
-
-		log.debug("Die Klassenvariable" + singleIban);
 
 		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
 		log.debug("Response: " + respEntity.getBody().toString());
 		return "sites/consentIdConfirmer";
 
+	}
+
+	/*
+	 * 30.07: Spät Abends: Hier kommen noch die Transactions hin
+	 * 
+	 * Nächster Termin: Sonntag, 14.00
+	 */
+
+	private List<Transactions> getTransactionsfromMB(Account accountDetails, String consentId) {
+		String transactionsUrl = accountDetails.getLinks().getTransactions().getHref();
+
+		HttpHeaders headers = prepareHeaders();
+		headers.set("Consent-ID", consentId);
+
+		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<Transactions> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
+				Transactions.class);
+
+		return respEntity.getBody().getBooked();
 	}
 
 	private List<Balance> getbalancesFromAccount(Account accountDetails, String consentId) {
@@ -185,14 +163,6 @@ public class ConsentIdController {
 		return respEntity.getBody().getAccount();
 
 	}
-
-	// BEGIN: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
-
-	public List<String> getAllIban() {
-		return ibanList;
-	}
-
-	// FERTIG: NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU *** NEU
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();

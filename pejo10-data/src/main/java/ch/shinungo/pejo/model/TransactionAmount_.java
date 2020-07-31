@@ -1,7 +1,6 @@
 package ch.shinungo.pejo.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,16 +11,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "account", "balances" })
+@JsonPropertyOrder({ "currency", "amount" })
 @Data
-public class BalancesResponse {
+public class TransactionAmount_ {
 
-	@JsonProperty("account")
-	private Account account;
-	@JsonProperty("balances")
-	private List<Balance> balances = null;
-	@JsonProperty("transactions")
-	private Transactions transactions;
+	@JsonProperty("currency")
+	private String currency;
+	@JsonProperty("amount")
+	private String amount;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
