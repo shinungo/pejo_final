@@ -83,9 +83,7 @@ public class ConsentIdController {
 
 		Account accountDetails;
 
-		/*
-		 * 
-		 */
+		// Object bookingStatus; // MAL TESTEN
 
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
@@ -98,8 +96,9 @@ public class ConsentIdController {
 		for (Account a : respEntity.getBody().getAccounts()) {
 			log.debug(a.getResourceId());
 			accountDetails = getAccountDetails(a, consentId);
+			// bookingStatus = getAllTransactions(a, bookingStatus, consentId);
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
-			List<Transactions> getTransactions = getTransactionsfromMB(accountDetails, consentId);
+			List<Transactions> getAllTransactions = getAllTransactions(accountDetails, consentId);
 		}
 
 		// log.debug("Account_2" + resourceIdList);
@@ -111,12 +110,13 @@ public class ConsentIdController {
 	}
 
 	/*
-	 * 30.07: Spät Abends: Hier kommen noch die Transactions hin
+	 * 30.07: Spät Abends: Hier kommen noch die Transactions hin Nächster Termin:
+	 * Sonntag, 14.00
 	 * 
-	 * Nächster Termin: Sonntag, 14.00
+	 * DIES METHODE GEHT NOCH NICHT:::: 31.07.2020
 	 */
 
-	private List<Transactions> getTransactionsfromMB(Account accountDetails, String consentId) {
+	private List<Transactions> getAllTransactions(Account accountDetails, String consentId) {
 		String transactionsUrl = accountDetails.getLinks().getTransactions().getHref();
 
 		HttpHeaders headers = prepareHeaders();
@@ -127,7 +127,8 @@ public class ConsentIdController {
 		ResponseEntity<Transactions> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
 				Transactions.class);
 
-		return respEntity.getBody().getBooked();
+		log.debug("Hier sind wir");
+		return null;
 	}
 
 	private List<Balance> getbalancesFromAccount(Account accountDetails, String consentId) {
