@@ -12,9 +12,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "href", "booked", "pending", "_links" })
+@JsonPropertyOrder({ "href", "booked", "pending", "_links", "both", "bookingStatus" })
 @Data
 public class Transactions {
+
+	// NEU; 01.08.2020 bookingStatus & both:
+
+	@JsonProperty("both")
+	public String both;
+
+	@JsonProperty("bookingStatus")
+	public String bookingStatus;
 
 	@JsonProperty("booked")
 	private List<Booked> booked = null;

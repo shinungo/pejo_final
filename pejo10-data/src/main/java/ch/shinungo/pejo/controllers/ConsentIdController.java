@@ -72,18 +72,23 @@ public class ConsentIdController {
 
 		model.addAttribute("confirmationBanklink", respEntity.getBody().getLinks().getScaRedirect().getHref());
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
-		// hier könne User hinzugefüt wewrden
+
+		// NEU PER 01.08.2020:
+
+		// @ MABOLL AM SONNTAG MAL AUSNAHMSWEISE MIT DEM Chäfferli und BreakPoints
+		// Setzen.
+
+		model.addAttribute("bookingStatus", respEntity.getBody().getLinks().getTransactions());
 
 		return "sites/consentIdConfirmer";
 	}
 
 	@GetMapping({ "getAccounts" })
-	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId)
-			throws JsonProcessingException {
+	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId,
+			String bookingStatus) throws JsonProcessingException {
 
 		Account accountDetails;
-
-		// Object bookingStatus; // MAL TESTEN
+		// HIER KEIN BOOKING STATUAS
 
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
@@ -96,12 +101,10 @@ public class ConsentIdController {
 		for (Account a : respEntity.getBody().getAccounts()) {
 			log.debug(a.getResourceId());
 			accountDetails = getAccountDetails(a, consentId);
-			// bookingStatus = getAllTransactions(a, bookingStatus, consentId);
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
-			List<Transactions> getAllTransactions = getAllTransactions(accountDetails, consentId);
-		}
 
-		// log.debug("Account_2" + resourceIdList);
+			List<Transactions> getAllTransactions = getTransactions(accountDetails, consentId, bookingStatus);
+		}
 
 		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
 		log.debug("Response: " + respEntity.getBody().toString());
@@ -110,28 +113,44 @@ public class ConsentIdController {
 	}
 
 	/*
-	 * 30.07: Spät Abends: Hier kommen noch die Transactions hin Nächster Termin:
-	 * Sonntag, 14.00
+	 * Hier kommen noch die Transactions hin Nächster Termin: Sonntag, 14.00
 	 * 
-	 * DIES METHODE GEHT NOCH NICHT:::: 31.07.2020
+	 * 
+	 * BookingStatus musst du wie Consent-ID, X-Request-ID oder account-id mit
+	 * geben. schau mal wie du das da gemacht hast und mach es gleich.
+	 * 
+	 * Nimm "both" so musst du nicht eine zusätzliche Enum machen etc.. einfach
+	 * hardcoded eintragen, so wie das bei X-Request-ID gemacht wurde.
+	 * 
 	 */
 
-	private List<Transactions> getAllTransactions(Account accountDetails, String consentId) {
+	private List<Transactions> getTransactions(Account accountDetails, String consentId, String bookingStatus) {
+
 		String transactionsUrl = accountDetails.getLinks().getTransactions().getHref();
 
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
+
+		log.debug("BIS HIER MIT DEBUGGER OK");
 
 		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<Transactions> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
 				Transactions.class);
 
+		// return respEntity.getBody()
+
 		log.debug("Hier sind wir");
+
+		/*
+		 * Transactions lässt sich nicht retournieren.
+		 */
+
 		return null;
 	}
 
 	private List<Balance> getbalancesFromAccount(Account accountDetails, String consentId) {
+
 		String balancesUrl = accountDetails.getLinks().getBalances().getHref();
 
 		HttpHeaders headers = prepareHeaders();
@@ -143,9 +162,6 @@ public class ConsentIdController {
 				BalancesResponse.class);
 
 		return respEntity.getBody().getBalances();
-
-		// TODO Auto-generated method stub
-
 	}
 
 	private Account getAccountDetails(Account a, String consentId) {
@@ -164,9 +180,11 @@ public class ConsentIdController {
 		return respEntity.getBody().getAccount();
 
 	}
+// BOOKING STATUS "both" 01.08.2020 
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();
+		headers.set("bookingStatus", "both");
 		headers.set("X-Request-ID", "99391c7e-ad88-49ec-a2ad-99ddcb1f7721");
 		headers.set("psu-ip-address", "192.168.0.2"); // IPv4: 192.168.1.5 // Standardgateway 192.168.1.1
 		headers.set("tpp-redirect-uri", "url-class-java-examples");

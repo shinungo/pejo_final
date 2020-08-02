@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "scaRedirect", "self", "status", "scaStatus", "balances", "transactions" })
+@JsonPropertyOrder({ "scaRedirect", "self", "status", "scaStatus", "balances", "transactions", "account" })
 @Data
 public class Links implements Serializable {
 
