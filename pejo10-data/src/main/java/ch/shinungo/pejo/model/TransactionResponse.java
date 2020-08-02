@@ -11,15 +11,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "currency", "amount" })
+@JsonPropertyOrder({ "account", "transactions" })
 @Data
-public class TransactionAmount_ {
+public class TransactionResponse {
 
-	@JsonProperty("currency")
-	private String currency;
-	@JsonProperty("amount")
-	private String amount;
+	@JsonProperty("account")
+	private Account account;
+	@JsonProperty("transactions")
+	private Transactions transactions;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
 }

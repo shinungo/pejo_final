@@ -30,7 +30,7 @@ public class Links implements Serializable {
 	@JsonProperty("scaStatus")
 	private ScaStatus scaStatus;
 	@JsonProperty("account")
-	private Account_ account;
+	private Account account;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private final static long serialVersionUID = -5032009195944471973L;

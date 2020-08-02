@@ -16,11 +16,6 @@ import lombok.Data;
 @Data
 public class Transactions {
 
-	// NEU; 01.08.2020 bookingStatus & both:
-
-	@JsonProperty("both")
-	public String both;
-
 	@JsonProperty("bookingStatus")
 	public String bookingStatus;
 

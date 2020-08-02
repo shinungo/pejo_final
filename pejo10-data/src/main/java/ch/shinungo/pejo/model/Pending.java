@@ -21,9 +21,9 @@ public class Pending {
 	@JsonProperty("creditorName")
 	private String creditorName;
 	@JsonProperty("creditorAccount")
-	private CreditorAccount_ creditorAccount;
+	private CreditorAccount creditorAccount;
 	@JsonProperty("transactionAmount")
-	private TransactionAmount_ transactionAmount;
+	private TransactionAmount transactionAmount;
 	@JsonProperty("valueDate")
 	private String valueDate;
 	@JsonProperty("remittanceInformationUnstructured")

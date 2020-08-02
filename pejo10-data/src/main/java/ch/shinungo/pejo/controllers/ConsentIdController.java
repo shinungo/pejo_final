@@ -28,10 +28,11 @@ import ch.shinungo.pejo.model.AccountDetailResponse;
 import ch.shinungo.pejo.model.AccountResponse;
 import ch.shinungo.pejo.model.Balance;
 import ch.shinungo.pejo.model.BalancesResponse;
+import ch.shinungo.pejo.model.Booked;
 import ch.shinungo.pejo.model.ConsentRequest;
 import ch.shinungo.pejo.model.ConsentResponse;
 import ch.shinungo.pejo.model.Transaction;
-import ch.shinungo.pejo.model.Transactions;
+import ch.shinungo.pejo.model.TransactionResponse;
 import ch.shinungo.pejo.repository.User;
 import ch.shinungo.pejo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -84,8 +85,8 @@ public class ConsentIdController {
 	}
 
 	@GetMapping({ "getAccounts" })
-	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId,
-			String bookingStatus) throws JsonProcessingException {
+	public String getAccounts(@RequestParam(value = "consentId", required = true) String consentId, Model model)
+			throws JsonProcessingException {
 
 		Account accountDetails;
 		// HIER KEIN BOOKING STATUAS
@@ -99,23 +100,22 @@ public class ConsentIdController {
 				AccountResponse.class);
 
 		for (Account a : respEntity.getBody().getAccounts()) {
+
 			log.debug(a.getResourceId());
 			accountDetails = getAccountDetails(a, consentId);
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 
-			List<Transactions> getAllTransactions = getTransactions(accountDetails, consentId, bookingStatus);
+			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
+			a.setBalances(getbalancesFromAccount);
+			a.setTransactions(getBookedTransactions);
 		}
 
-		log.debug("Account ID: " + respEntity.getBody().getAccounts().get(1).getResourceId());
-		log.debug("Response: " + respEntity.getBody().toString());
-		return "sites/consentIdConfirmer";
+		model.addAttribute("accounts", respEntity.getBody().getAccounts());
+		return "sites/showAccounts";
 
 	}
 
 	/*
-	 * Hier kommen noch die Transactions hin Nächster Termin: Sonntag, 14.00
-	 * 
-	 * 
 	 * BookingStatus musst du wie Consent-ID, X-Request-ID oder account-id mit
 	 * geben. schau mal wie du das da gemacht hast und mach es gleich.
 	 * 
@@ -124,9 +124,14 @@ public class ConsentIdController {
 	 * 
 	 */
 
-	private List<Transactions> getTransactions(Account accountDetails, String consentId, String bookingStatus) {
+	private List<Booked> getTransactions(Account accountDetails, String consentId) {
 
-		String transactionsUrl = accountDetails.getLinks().getTransactions().getHref();
+		String bookingStatus = "booked";
+		String dateFrom = "1970-01-01";
+
+		String transactionsUrl = accountDetails.getLinks().getTransactions().getHref() + "?bookingStatus="
+				+ bookingStatus + "&dateFrom=" + dateFrom;
+		;
 
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
@@ -135,18 +140,13 @@ public class ConsentIdController {
 
 		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
 		RestTemplate template = new RestTemplate();
-		ResponseEntity<Transactions> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
-				Transactions.class);
+		ResponseEntity<TransactionResponse> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
+				TransactionResponse.class);
 
-		// return respEntity.getBody()
+		return respEntity.getBody().getTransactions().getBooked();
+		// return respEntity.getBody().bookingStatus.ge
+		// return respEntity.getBody().get
 
-		log.debug("Hier sind wir");
-
-		/*
-		 * Transactions lässt sich nicht retournieren.
-		 */
-
-		return null;
 	}
 
 	private List<Balance> getbalancesFromAccount(Account accountDetails, String consentId) {
@@ -184,7 +184,7 @@ public class ConsentIdController {
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("bookingStatus", "both");
+
 		headers.set("X-Request-ID", "99391c7e-ad88-49ec-a2ad-99ddcb1f7721");
 		headers.set("psu-ip-address", "192.168.0.2"); // IPv4: 192.168.1.5 // Standardgateway 192.168.1.1
 		headers.set("tpp-redirect-uri", "url-class-java-examples");

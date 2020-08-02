@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<title>Show Account Site </title>
+<div data-th-replace="fragments/head :: copy"></div>
+
+<body>
+	<div th:replace="fragments/nav :: copy('showAccount')"></div>
+    <div id ="standardView">
+		 <h1>Show Account Site</h1>
+        <a href="/getConsentId">Goto Index</a>
+    </div>
+
+
+<table>
+  <tr>
+    <th>Column 1 Heading</th>
+    <th>Column 2 Heading</th>
+  </tr>
+  <tr>
+    <td>Row 1: Col 1</td>
+    <td>Row 1: Col 2</td>
+  </tr>
+</table>
+
+
+
+
+			<option th:each="account : ${accounts}"
+                            th:value="${account.iban}"
+                            th:utext="${user.name}"/>
+
+
+<!-- 
+To Do 
+Accounts anzeigen. 
+Balance  & Transaction = Liste. 
+Für jedes Each ---- wieder ein Eacht machen. 
+
+U
+
+
+ -->
+
+
+
+
+      <div th:replace="fragments/footer :: copy"></div>
+</body>
+</html>

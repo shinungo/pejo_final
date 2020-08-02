@@ -3,6 +3,7 @@ package ch.shinungo.pejo.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +15,7 @@ import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "iban", "otherAccountIdentification", "currency", "resourceId", "product", "cashAccountType",
-		"name", "_links"
+		"name", "_links", "href"
 
 })
 @Data // DIES IST LOMCOK UND MACHT GETER SETTER 29.7.
@@ -22,6 +23,9 @@ public class Account implements Serializable {
 
 	@JsonProperty("iban")
 	private String iban;
+	@JsonProperty("href")
+	private String href;
+
 	@JsonProperty("resourceId")
 	public String resourceId;
 	@JsonProperty("product")
@@ -39,5 +43,6 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private final static long serialVersionUID = 2228834932433386726L;
-
+	private List<Balance> balances = null;
+	private List<Booked> transactions = null;
 }
