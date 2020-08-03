@@ -7,12 +7,9 @@
 	<div th:replace="fragments/nav :: copy('showAccounts')"></div>
     <div id ="standardView">
 		 <h1>Show Account Site</h1>
-        <a href="/getConsentId">Goto Index</a>
-    </div>
+
 
 <div>
-
-
 <table>
     <thead>
         <tr>
@@ -24,39 +21,37 @@
         <tr th:each="account : ${accounts}">
 			<td><span th:text="${account.cashAccountType}"> cashAccountType </span></td>
             <td><span th:text="${account.currency}"> Währung </span></td>
-			<td><span th:text="${account.iban}"> Iban </span></td>
+            <td><span th:text="${account.iban}"> Iban </span></td>
 	        </tr>
-    
-    
-    
-    
     </tbody>
-    
 </table>
-
-
-
 </div>
-
-
-
-
 
 <!-- 
 			<option th:each="account : ${accounts}"
                             th:value="${account.iban}"
                             th:utext="${user.name}"/>
-
 To Do 
 Accounts anzeigen. 
 Balance  & Transaction = Liste. 
 Für jedes Each ---- wieder ein Eacht machen. 
-
-U
-
-
  -->
 
+<div>
+<table>
+    <thead>
+        <tr>
+            <th> BalanceAmount </th><th> Currency </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr th:each="balance : ${balances}">
+			<td><span th:text="${balance.amount}">balanceAmount </span></td>
+            <td><span th:text="${balance.currency}"> Währung </span></td>
+	        </tr>
+    </tbody>
+</table>
 
 
 

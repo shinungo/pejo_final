@@ -93,18 +93,18 @@ public class ConsentIdController {
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
 
-		for (Account a : respEntity.getBody().getAccounts()) {
+		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
-			log.debug(a.getResourceId());
-			accountDetails = getAccountDetails(a, consentId);
+			log.debug(currentAccount.getResourceId());
+			accountDetails = getAccountDetails(currentAccount, consentId);
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
-
 			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
-			a.setBalances(getbalancesFromAccount);
-			a.setTransactions(getBookedTransactions);
+			currentAccount.setBalances(getbalancesFromAccount);
+			currentAccount.setTransactions(getBookedTransactions);
 		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
+
 		return "sites/showAccounts";
 
 	}
@@ -146,6 +146,17 @@ public class ConsentIdController {
 
 		return respEntity.getBody().getBalances();
 	}
+
+//	public String showCreateForm(Model model) {
+//	    BooksCreationDto booksForm = new BooksCreationDto();
+//	 
+//	    for (int i = 1; i <= 3; i++) {
+//	        booksForm.addBook(new Book());
+//	    }
+//	 
+//	    model.addAttribute("form", booksForm);
+//	    return "books/createBooksForm";
+//		}
 
 	private Account getAccountDetails(Account a, String consentId) {
 		String accountDetailUrl = ACCOUNTS_URL + "/" + a.getResourceId();
