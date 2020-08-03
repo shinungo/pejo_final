@@ -4,7 +4,6 @@
 <div data-th-replace="fragments/head :: copy"></div>
 <body>
 
-
 <div th:replace="fragments/nav :: copy('consentIdConfirmer')"></div>
 
 
@@ -20,33 +19,13 @@
 		</br>
 		<label th:text="${ConsentID}"></label></br></br></br>
 		
-		
 		<label for="User">Bitte Entscheiden Sie:</label> 
 	
-<!--  
-	
-		<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
-			<br> <input type="submit" value="getAccounts"></form>
-			
-
-		 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
-		 	 	 -->
-		 	 
-
-
-
 
 	<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
 			<br> <input type="submit" value="justAbutton"></form>
-	
-	
 	 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
-	
-	
-	
-		
 			</div>
-
 
     <div th:replace="fragments/footer :: copy"></div>
     

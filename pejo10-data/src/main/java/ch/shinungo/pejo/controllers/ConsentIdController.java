@@ -73,12 +73,6 @@ public class ConsentIdController {
 
 		model.addAttribute("confirmationBanklink", respEntity.getBody().getLinks().getScaRedirect().getHref());
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
-
-		// NEU PER 01.08.2020:
-
-		// @ MABOLL AM SONNTAG MAL AUSNAHMSWEISE MIT DEM Chäfferli und BreakPoints
-		// Setzen.
-
 		model.addAttribute("bookingStatus", respEntity.getBody().getLinks().getTransactions());
 
 		return "sites/consentIdConfirmer";
@@ -115,15 +109,6 @@ public class ConsentIdController {
 
 	}
 
-	/*
-	 * BookingStatus musst du wie Consent-ID, X-Request-ID oder account-id mit
-	 * geben. schau mal wie du das da gemacht hast und mach es gleich.
-	 * 
-	 * Nimm "both" so musst du nicht eine zusätzliche Enum machen etc.. einfach
-	 * hardcoded eintragen, so wie das bei X-Request-ID gemacht wurde.
-	 * 
-	 */
-
 	private List<Booked> getTransactions(Account accountDetails, String consentId) {
 
 		String bookingStatus = "booked";
@@ -144,8 +129,6 @@ public class ConsentIdController {
 				TransactionResponse.class);
 
 		return respEntity.getBody().getTransactions().getBooked();
-		// return respEntity.getBody().bookingStatus.ge
-		// return respEntity.getBody().get
 
 	}
 
@@ -180,7 +163,6 @@ public class ConsentIdController {
 		return respEntity.getBody().getAccount();
 
 	}
-// BOOKING STATUS "both" 01.08.2020 
 
 	private HttpHeaders prepareHeaders() {
 		HttpHeaders headers = new HttpHeaders();
