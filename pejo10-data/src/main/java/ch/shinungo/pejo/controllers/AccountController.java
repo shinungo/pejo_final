@@ -12,11 +12,11 @@ public class AccountController {
 	// Nachtrag: vom 29.07.: Beweis für MOTZ:
 //	@RequestMapping(path = { "/showAccount", "sites/showAccount" })
 
-	@GetMapping(path = { "/showAccount", "sites/showAccount" })
+	@GetMapping(path = { "/showAccounts", "sites/showAccounts" })
 	public String showAccountHtml() {
 
 		log.debug("Account-Controller direkt angesteuert");
 
-		return "sites/showAccount";
+		return "sites/showAccounts";
 	}
 }
