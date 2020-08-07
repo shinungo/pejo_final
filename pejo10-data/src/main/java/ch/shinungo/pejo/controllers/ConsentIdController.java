@@ -2,9 +2,7 @@ package ch.shinungo.pejo.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -49,14 +47,6 @@ public class ConsentIdController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping({ "getConsentId", "/", "/start", "/home" })
-
-	public String showUserSelector(Model model) {
-		model.addAttribute("userForm", new UserForm());
-		model.addAttribute("users", userService.getAllUsers());
-		return "sites/userSelector";
-	}
-
 	@PostMapping("getConsentId")
 	public String getConsentId(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
 
@@ -85,7 +75,6 @@ public class ConsentIdController {
 			throws JsonProcessingException {
 
 		Account accountDetails;
-		// HIER KEIN BOOKING STATUAS
 
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
@@ -95,16 +84,18 @@ public class ConsentIdController {
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
 
+		// Um den User im HTML auszugeben:
+
 		// LISTE unD HASH-MAP Gem MAURI 5.8.
 		// List<String> noteListMap = null;
-		List<Account> accounts = null;
-		Map<String, List<Balance>> noteListMap = new HashMap<>();
+		// List<Account> accounts = null;
+		// Map<String, List<Balance>> noteListMap = new HashMap<>();
 
 		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
-			log.debug("get IBAN " + currentAccount.getIban());
 			accountDetails = getAccountDetails(currentAccount, consentId);
 
+			log.debug("account Details: accountDetails" + accountDetails);
 			log.debug("account Details: Currency   " + accountDetails.getCurrency());
 			log.debug("account Details: CashA.Type " + accountDetails.getCashAccountType());
 			log.debug("account Details: IBAN       " + accountDetails.getIban());
@@ -118,11 +109,11 @@ public class ConsentIdController {
 			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
 			currentAccount.setTransactions(getBookedTransactions);
 
+			log.debug("getBookedTransactions A " + getBookedTransactions);
 			log.debug("getBookedTransactions B " + currentAccount.getBalances());
-			log.debug("getBookedTransactions C " + currentAccount.getTransactions());
-			log.debug("getBookedTransactions D " + currentAccount.getTransactions().toString());
 
-			noteListMap.put("stand", currentAccount.getBalances());
+			// noteListMap.put("stand", currentAccount.getBalances());
+			// noteListMap.get(currentAccount);
 		}
 
 //		for (Account currentAccount : respEntity.getBody().getAccounts()) {
@@ -136,7 +127,18 @@ public class ConsentIdController {
 //		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
-		model.addAttribute("SaldiListe", noteListMap.toString());
+		model.addAttribute("balances", respEntity.getBody().getAdditionalProperties());
+
+		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
+
+		/*
+		 * Wieso kann ich Werte nicht aus den get AdditionalPropeties holen.
+		 */
+
+		log.debug("FRAGE-MOTZ" + respEntity.getBody().getAdditionalProperties());
+//		model.addAttribute("SaldiListe", noteListMap.toString());
+
+		// model.addAttribute("CurrentUser", respEntity.ge ;
 
 		return "sites/showAccounts";
 

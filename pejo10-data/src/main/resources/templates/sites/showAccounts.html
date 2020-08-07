@@ -7,6 +7,9 @@
 	<div th:replace="fragments/nav :: copy('showAccounts')"></div>
     <div id ="standardView">
 		 <h1>Show Account Site</h1>
+		
+<a>Hier kommt der Name</a>
+		 <label th:text="${name}"></label>
 
 
 <div>
@@ -23,6 +26,7 @@
 			<td><span th:text="${account.cashAccountType}"> cashAccountType </span></td>
             <td><span th:text="${account.currency}"> Währung </span></td>
             <td><span th:text="${account.iban}"> Iban </span></td>
+            <td><span th:text="${account.name}"> Iban </span></td>
             
                     
             <th> NEWBalanceAmount </th><th> NEWCurrency </th>
@@ -30,13 +34,23 @@
             
                     		<tr th:each="balance : ${balances}">
 							<td><span th:text="${balance.amount}">balanceAmount </span></td>
+							<td><span th:text="${balanceAmount.amount}">b22222alanceAmount </span></td>
+            				<td><span th:text="${balance.currency}"> Währung </span></td>
+	        				</tr>
+	        				
+	        				
+	        				        <th> newBooked </th><th> NEWCurrency </th>
+        </tr>
+            
+                    		<tr th:each="booked : ${balances}">
+							<td><span th:text="${balance.amount}">balanceAmount </span></td>
             				<td><span th:text="${balance.currency}"> Währung </span></td>
 	        				</tr>
 	        				
 	        				
 	        				      <th> balanceListMap </th>
 	        				
-	        				 		<tr th:each="SaldiListe : ${balanceListMaps}">
+	        				 		<tr th:each="SaldiListe : ${SaldiListes}">
             				<td><span th:text="${balanceListMap.currency}"> Währung </span></td>
 	        				</tr>
 	        				
