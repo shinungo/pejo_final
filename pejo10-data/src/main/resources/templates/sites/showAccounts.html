@@ -12,6 +12,7 @@
 <div>
 <table>
     <thead>
+
         <tr>
             <th> Type </th><th> Currency </th><th> Iban </th><th> Iban </th>
         </tr>
@@ -22,7 +23,26 @@
 			<td><span th:text="${account.cashAccountType}"> cashAccountType </span></td>
             <td><span th:text="${account.currency}"> Währung </span></td>
             <td><span th:text="${account.iban}"> Iban </span></td>
-	        </tr>
+            
+                    
+            <th> NEWBalanceAmount </th><th> NEWCurrency </th>
+        </tr>
+            
+                    		<tr th:each="balance : ${balances}">
+							<td><span th:text="${balance.amount}">balanceAmount </span></td>
+            				<td><span th:text="${balance.currency}"> Währung </span></td>
+	        				</tr>
+	        				
+	        				
+	        				      <th> balanceListMap </th>
+	        				
+	        				 		<tr th:each="SaldiListe : ${balanceListMaps}">
+            				<td><span th:text="${balanceListMap.currency}"> Währung </span></td>
+	        				</tr>
+	        				
+	        				
+	        				
+	        
     </tbody>
 </table>
 </div>
@@ -38,20 +58,7 @@ Für jedes Each ---- wieder ein Eacht machen.
  -->
 
 <div>
-<table>
-    <thead>
-        <tr>
-            <th> BalanceAmount </th><th> Currency </th>
-        </tr>
-    </thead>
-    
-    <tbody>
-        <tr th:each="balance : ${balances}">
-			<td><span th:text="${balance.amount}">balanceAmount </span></td>
-            <td><span th:text="${balance.currency}"> Währung </span></td>
-	        </tr>
-    </tbody>
-</table>
+
 
 
 

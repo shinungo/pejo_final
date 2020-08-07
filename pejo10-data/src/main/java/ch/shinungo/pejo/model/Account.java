@@ -40,9 +40,13 @@ public class Account implements Serializable {
 	private String otherAccountIdentification;
 	@JsonProperty("currency")
 	private String currency;
+
+	// von Ignore herauf geholt 7.8.20
+	@JsonProperty("balances")
+	private List<Balance> balances = null;
+
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private final static long serialVersionUID = 2228834932433386726L;
-	private List<Balance> balances = null;
 	private List<Booked> transactions = null;
 }

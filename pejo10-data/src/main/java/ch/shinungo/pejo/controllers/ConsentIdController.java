@@ -2,7 +2,9 @@ package ch.shinungo.pejo.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -93,17 +95,48 @@ public class ConsentIdController {
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
 
+		// LISTE unD HASH-MAP Gem MAURI 5.8.
+		// List<String> noteListMap = null;
+		List<Account> accounts = null;
+		Map<String, List<Balance>> noteListMap = new HashMap<>();
+
 		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
-			log.debug(currentAccount.getResourceId());
+			log.debug("get IBAN " + currentAccount.getIban());
 			accountDetails = getAccountDetails(currentAccount, consentId);
+
+			log.debug("account Details: Currency   " + accountDetails.getCurrency());
+			log.debug("account Details: CashA.Type " + accountDetails.getCashAccountType());
+			log.debug("account Details: IBAN       " + accountDetails.getIban());
+			log.debug("account Details: Name       " + accountDetails.getName());
+
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
-			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
+
+			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
+
+			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
 			currentAccount.setTransactions(getBookedTransactions);
+
+			log.debug("getBookedTransactions B " + currentAccount.getBalances());
+			log.debug("getBookedTransactions C " + currentAccount.getTransactions());
+			log.debug("getBookedTransactions D " + currentAccount.getTransactions().toString());
+
+			noteListMap.put("stand", currentAccount.getBalances());
 		}
 
+//		for (Account currentAccount : respEntity.getBody().getAccounts()) {
+//
+//			log.debug(currentAccount.getResourceId());
+//			accountDetails = getAccountDetails(currentAccount, consentId);
+//			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
+//			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
+//			currentAccount.setBalances(getbalancesFromAccount);
+//			currentAccount.setTransactions(getBookedTransactions);
+//		}
+
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
+		model.addAttribute("SaldiListe", noteListMap.toString());
 
 		return "sites/showAccounts";
 
@@ -144,19 +177,11 @@ public class ConsentIdController {
 		ResponseEntity<BalancesResponse> respEntity = template.exchange(balancesUrl, HttpMethod.GET, entityReq,
 				BalancesResponse.class);
 
+		// log.debug("getBalancesFromAccoumt IN Methode" +
+		// respEntity.getBody().getBalances());
+
 		return respEntity.getBody().getBalances();
 	}
-
-//	public String showCreateForm(Model model) {
-//	    BooksCreationDto booksForm = new BooksCreationDto();
-//	 
-//	    for (int i = 1; i <= 3; i++) {
-//	        booksForm.addBook(new Book());
-//	    }
-//	 
-//	    model.addAttribute("form", booksForm);
-//	    return "books/createBooksForm";
-//		}
 
 	private Account getAccountDetails(Account a, String consentId) {
 		String accountDetailUrl = ACCOUNTS_URL + "/" + a.getResourceId();
@@ -169,7 +194,7 @@ public class ConsentIdController {
 		ResponseEntity<AccountDetailResponse> respEntity = template.exchange(accountDetailUrl, HttpMethod.GET,
 				entityReq, AccountDetailResponse.class);
 
-		log.debug("getAccountDetails:  " + respEntity.getBody().getAccount().getResourceId());
+//		log.debug("getAccountDetails: IN Methode  " + respEntity.getBody().getAccount().getResourceId());
 
 		return respEntity.getBody().getAccount();
 
