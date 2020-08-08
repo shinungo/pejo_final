@@ -2,7 +2,9 @@ package ch.shinungo.pejo.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -89,7 +91,7 @@ public class ConsentIdController {
 		// LISTE unD HASH-MAP Gem MAURI 5.8.
 		// List<String> noteListMap = null;
 		// List<Account> accounts = null;
-		// Map<String, List<Balance>> noteListMap = new HashMap<>();
+		Map<String, List<Balance>> noteListMap = new HashMap<>();
 
 		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
@@ -103,6 +105,10 @@ public class ConsentIdController {
 
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
+
+			noteListMap.put(accountDetails.getIban(), getbalancesFromAccount);
+
+			log.debug("hier die noteListe" + noteListMap);
 
 			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
 
@@ -126,6 +132,7 @@ public class ConsentIdController {
 //			currentAccount.setTransactions(getBookedTransactions);
 //		}
 
+		model.addAttribute("testListe", respEntity.getBody().getAccounts());
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
 		model.addAttribute("balances", respEntity.getBody().getAdditionalProperties());
 

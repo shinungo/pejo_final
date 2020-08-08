@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -18,6 +17,14 @@ public class AccountResponse {
 
 	@JsonProperty("accounts")
 	private List<Account> accounts = null;
-	@JsonIgnore
+
+	// TestesHabler Neue: 8.8.2020
+
+	private Map<String, List<Balance>> testListe = new HashMap<>();
+
+	@JsonProperty("additionalProperties")
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+//	@JsonIgnore
+//	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 }
