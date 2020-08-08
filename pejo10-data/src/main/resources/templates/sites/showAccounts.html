@@ -13,7 +13,7 @@
 
 <div>
 <table>
-    <thead><tr><th> Type </th><th> Currency </th><th> Iban </th><th> Name </th></tr> <th> NEWBalanceAmount </th><th> NEWCurrency </th></tr></thead>
+    <thead><tr><th> Type </th><th> Currency </th><th> Iban </th><th> Name </th> <th> BalanceAmount </th><th> Currency </th></tr></thead>
     
     <tbody><tr th:each="account : ${accounts}">
 			<td><span th:text="${account.cashAccountType}"> account.cashAccountType </span></td>
@@ -24,7 +24,7 @@
            
                     		<tr th:each="balance : ${balances}">
 							<td><span th:text="${balance.amount}">balanceAmount </span></td>
-							<td><span th:text="${balanceAmount.amount}">b22222alanceAmount </span></td>
+							<td><span th:text="${balanceAmount.amount}">balanceAmount </span></td>
             				<td><span th:text="${balance.currency}"> Währung </span></td></tr></div>
 	        
     </tbody>
@@ -35,41 +35,27 @@
 
 <div>
 <table>
-    <thead><tr><th> Type </th><th> Currency </th><th> Iban </th><th> Name </th></tr></thead>
+    <thead><tr><th> Type </th><th> Currency </th><th> Iban </th><th> Name </th> <th> BalanceAmount </th><th> Currency </th></tr></thead>
     
-    <tbody><tr th:each="testListe : ${testListes}">
+    <tbody><tr th:each="account : ${accounts}">
 			<td><span th:text="${account.cashAccountType}"> account.cashAccountType </span></td>
             <td><span th:text="${account.currency}"> Account.currency </span></td>
             <td><span th:text="${account.iban}"> Account.Iban </span></td>
-            
-            <th> NEWBalanceAmount </th><th> NEWCurrency </th></tr>
-                    		<tr th:each="balance : ${balances}">
-							<td><span th:text="${balance.amount}">balanceAmount </span></td>
-							<td><span th:text="${balanceAmount.amount}">b22222alanceAmount </span></td>
-            				<td><span th:text="${balance.currency}"> Währung </span></td></tr></div>
-            				
-            				
-            <!-- 
-            				
-            				<tr th:each="emp,iterStat : ${empList}">
-       <td th:text="${emp.id}">ID</td>
-       <td th:text="${accList[iterStat.index].field}">Emp Account</td> 
-</tr>.
-            				
-            				
-            				
-             -->				
-            				
-            				
-            							
+            <td><span th:text="${account.name}"> Account.Name </span></td>
+           
 	        
     </tbody>
 </table>
 </div>
 
 
-
-<!-- 
+      				
+            <!-- 
+            				<tr th:each="emp,iterStat : ${empList}">
+       <td th:text="${emp.id}">ID</td>
+       <td th:text="${accList[iterStat.index].field}">Emp Account</td> 
+</tr>.
+            				
 			<option th:each="account : ${accounts}"
                             th:value="${account.iban}"
                             th:utext="${user.name}"/>
@@ -78,9 +64,6 @@ Accounts anzeigen.
 Balance  & Transaction = Liste. 
 Für jedes Each ---- wieder ein Eacht machen. 
  -->
-
-
-
 
 
 
