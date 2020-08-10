@@ -20,6 +20,9 @@ public class AccountResponse {
 
 	// TestesHabler Neue: 8.8.2020
 
+	@JsonProperty("balances")
+	private List<Account> balances = null;
+
 	private Map<String, List<Balance>> testListe = new HashMap<>();
 
 	@JsonProperty("additionalProperties")

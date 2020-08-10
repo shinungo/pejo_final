@@ -17,6 +17,7 @@ public class Balances {
 
 	@JsonProperty("href")
 	public String href;
+
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

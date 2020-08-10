@@ -9,7 +9,39 @@
 		 <h1>Show Account Site</h1>
 		 <div><a>Hier kommt der Name</a> 
 		<label th:text="${user}"></label>
-        </div>		 
+        </div>
+
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Currency</th>
+						<th>Iban</th>
+						<th>Name</th>
+						<th>BalanceAmount</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="account : ${accounts}">
+						<td><span th:text="${account.cashAccountType}">
+								account.cashAccountType </span></td>
+						<td><span th:text="${account.currency}">
+								Account.currency </span></td>
+						<td><span th:text="${account.iban}"> Account.Iban </span></td>
+						<td><span th:text="${account.name}"> Account.Name </span></td>
+						<div th:each="account : ${accounts}">
+								<div th:each="balance : ${account.balances}">
+								<tr><span th:text="${balance.balanceAmount}">balance </span></tr> 
+								</div>
+						</div>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h1>* * * * AB HIER ZUM BASTELN * * * * </h1>
 
 <div>
 <table>
@@ -21,32 +53,16 @@
             <td><span th:text="${account.iban}"> Account.Iban </span></td>
             <td><span th:text="${account.name}"> Account.Name </span></td>
             
-           
-                    		<tr th:each="balance : ${balances}">
+            <tr th:each="balance : ${balances}">
 							<td><span th:text="${balance.amount}">balanceAmount </span></td>
 							<td><span th:text="${balanceAmount.amount}">balanceAmount </span></td>
             				<td><span th:text="${balance.currency}"> Währung </span></td></tr></div>
-	        
-    </tbody>
-</table>
-</div>
-
- <h1>* * * * AB HIER ZUM BASTELN * * * * </h1>
-
-<div>
-<table>
-    <thead><tr><th> Type </th><th> Currency </th><th> Iban </th><th> Name </th> <th> BalanceAmount </th><th> Currency </th></tr></thead>
-    
-    <tbody><tr th:each="account : ${accounts}">
-			<td><span th:text="${account.cashAccountType}"> account.cashAccountType </span></td>
-            <td><span th:text="${account.currency}"> Account.currency </span></td>
-            <td><span th:text="${account.iban}"> Account.Iban </span></td>
-            <td><span th:text="${account.name}"> Account.Name </span></td>
            
 	        
     </tbody>
 </table>
 </div>
+
 
 
       				

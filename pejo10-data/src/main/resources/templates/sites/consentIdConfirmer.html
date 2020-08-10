@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <title>ConsentIdConfirmer</title>
+
+
 <div data-th-replace="fragments/head :: copy"></div>
+
 <body>
 
 <div th:replace="fragments/nav :: copy('consentIdConfirmer')"></div>
@@ -9,22 +12,56 @@
 
 	<div id="left_half_container">
 		 <h2>ConsentIdConfirmer</h2>
-			<h3>Durch Clicken wird die ConsentID dem confirmationBankLink hinzugefügt.</h3>
-			<h3>Dieses muss im sich neu Oeffnenden Tab bestaetigt werden, so dass ..... </h3>
-		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
-		</br></br></br>
-	</div>
-	<div id="right_half_container">
-		<h4>Hier die CONSENT ID</h4>
-		</br>
-		<label th:text="${ConsentID}"></label></br></br></br>
-		
-		<label for="User">Bitte Entscheiden Sie:</label> 
+			<a>Durch Clicken wird die ConsentID dem confirmationBankLink hinzugefügt.</a>
+			<a>Dieses muss im sich neu Oeffnenden Tab bestaetigt werden, so dass ..... </a>
+			</br>
+			
+			<h4>CurrentUSER???</h4>
+				<label th:text="${currentUser}"></label>
 	
+	<!-- 	MUSS ICH DEN USER AUCH SPEZIELL SPEICHERN; DAMIT ICH IHN AUSGEBEN KANN? 
+			<label th:text="${user.name}"></label>
+			
+				
+		
+		 -->
+		
+		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
+		</br>
+		
+		
 
+
+
+
+		<div>
+			<h4>CONSENT ID der Aktuellen Session</h4>
+			<label th:text="${ConsentID}"></label>
+			<h4>Wenn Consent ID vorhanden: Get Accounts möglich</h4>
+			<div>
+				<a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
+			</div>
+			
+			<h4>CurrentUSER???</h4>
+				<label th:text="${currentUser}"></label>
+		</div>
+
+		<!--  
+		BEISPIELS EINES BUTTONS: 
 	<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
 			<br> <input type="submit" value="justAbutton"></form>
-	 	<div><a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a></div>
+ -->
+ 
+		
+	</div>
+
+
+
+
+
+<div id="right_half_container">
+		<div th:replace="fragments/transactions :: copy"></div>
+	
 			</div>
 
     <div th:replace="fragments/footer :: copy"></div>

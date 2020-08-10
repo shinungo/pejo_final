@@ -58,14 +58,22 @@ public class ConsentIdController {
 
 		HttpEntity<String> entityReq = new HttpEntity<String>(jsonInString, headers);
 		RestTemplate template = new RestTemplate();
-		ResponseEntity<ConsentResponse> respEntity = template // HIer Zugriff angefragt.
+		ResponseEntity<ConsentResponse> respEntity = template // Hier Zugriff angefragt.
 				.exchange(CONSENT_URL, HttpMethod.POST, entityReq, ConsentResponse.class);
 
 		log.debug("ConsentID " + respEntity.getBody().getConsentId());
 
+		// Wie kann ich den ausgewählten USER (buha1,...) im HTML ausgeben?
+//		headers.set("currentUser", user.toString());
+//		log.debug("chunnt da öppis?             " + user);
+//		log.debug("chunnt da öppis? + to String " + user.toString());
+//		model.addAttribute("currentUser", user);
+
 		model.addAttribute("confirmationBanklink", respEntity.getBody().getLinks().getScaRedirect().getHref());
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
-		model.addAttribute("bookingStatus", respEntity.getBody().getLinks().getTransactions());
+
+		// DEN Braucht es irgendwie gar nicht....
+//		model.addAttribute("bookingStatus", respEntity.getBody().getLinks().getTransactions());
 
 		return "sites/consentIdConfirmer";
 	}
@@ -134,20 +142,15 @@ public class ConsentIdController {
 //		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
-
-//		model.addAttribute("balances", respEntity.getBody().getAdditionalProperties());
-//		model.addAttribute("testListe", respEntity.getBody().getAccounts());
-//
+		model.addAttribute("balances", respEntity.getBody().getBalances());
 		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
+		log.debug("die balances die ich haben kann: " + respEntity.getBody().getBalances());
 
-		/*
-		 * Wieso kann ich Werte nicht aus den get AdditionalPropeties holen.
-		 */
-
+		// Wieso kann ich Werte nicht aus den get AdditionalPropeties holen? bezw. wie
+		// kann ich
+		// die Werte - aus der oberen Methode - im HTML abhohlen?
+		//
 		log.debug("FRAGE-MOTZ" + respEntity.getBody().getAdditionalProperties());
-//		model.addAttribute("SaldiListe", noteListMap.toString());
-
-		// model.addAttribute("CurrentUser", respEntity.ge ;
 
 		return "sites/showAccounts";
 
@@ -165,13 +168,13 @@ public class ConsentIdController {
 		HttpHeaders headers = prepareHeaders();
 		headers.set("Consent-ID", consentId);
 
-		log.debug("BIS HIER MIT DEBUGGER OK");
-
 		HttpEntity<String> entityReq = new HttpEntity<String>(headers);
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<TransactionResponse> respEntity = template.exchange(transactionsUrl, HttpMethod.GET, entityReq,
 				TransactionResponse.class);
 
+		log.debug("BIS HIER MIT DEBUGGER OK");
+		log.debug("Booked wurden efasst: " + respEntity.getBody().getTransactions().getBooked());
 		return respEntity.getBody().getTransactions().getBooked();
 
 	}
