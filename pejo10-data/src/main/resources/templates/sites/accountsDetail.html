@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Openbanking API Test</title>
+	<style>
+		table, th, td {
+	  		border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+ <h1>Account Detail</h1>
+		<table>    
+		<th:block th:each="account : ${accounts}">
+		    <tr>
+		    	<td>resourceId</td>
+		        <td th:text="${account.resourceId}" />
+		        <td />
+		    </tr>
+		   	<tr>
+		    	<td>IBAN</td>
+		        <td th:text="${account.iban}" />
+		        <td />
+		    </tr>
+		   	<tr>
+		    	<td>Currency</td>
+		        <td th:text="${account.currency}" />
+		        <td />
+		    </tr>
+		 
+		   	<tr>
+		    	<td>cashAccountType</td>
+		        <td th:text="${account.cashAccountType}" />
+		        <td />
+		    </tr>
+
+		    <th:block th:each="balance : ${account.balances}">
+			   	<tr>
+			    	<td>Balances</td>
+			        <td />
+			        <td />
+			    </tr>
+			   	<tr>
+			   		<td />
+			    	<td>Amount</td>
+			        <td th:text="${balance.balanceAmount.amount}" />
+			    </tr>
+			   	<tr>
+			   		<td />
+			    	<td>Currency</td>
+			        <td th:text="${balance.balanceAmount.currency}" />
+			    </tr>
+			   	<tr>
+			   		<td />
+			    	<td>Type</td>
+			        <td th:text="${balance.balanceType}" />
+			    </tr>
+			</th:block>
+
+		    <th:block th:each="transaction : ${account.transactions}">
+			   	<tr>
+			    	<td>Transaction</td>
+			    	<td />
+			        <td />
+			    </tr>
+			   	<tr>
+			    	<td />
+			    	<td>Transaction ID</td>
+			        <td  th:text="${transaction.transactionId}" />
+			    </tr>
+				</th:block>
+		    
+		   	<tr>
+		    	<td />
+		    	<td />
+		        <td />
+		    </tr>
+		</th:block>
+	</table>
+</body>
+</html>

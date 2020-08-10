@@ -63,17 +63,8 @@ public class ConsentIdController {
 
 		log.debug("ConsentID " + respEntity.getBody().getConsentId());
 
-		// Wie kann ich den ausgewählten USER (buha1,...) im HTML ausgeben?
-//		headers.set("currentUser", user.toString());
-//		log.debug("chunnt da öppis?             " + user);
-//		log.debug("chunnt da öppis? + to String " + user.toString());
-//		model.addAttribute("currentUser", user);
-
 		model.addAttribute("confirmationBanklink", respEntity.getBody().getLinks().getScaRedirect().getHref());
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
-
-		// DEN Braucht es irgendwie gar nicht....
-//		model.addAttribute("bookingStatus", respEntity.getBody().getLinks().getTransactions());
 
 		return "sites/consentIdConfirmer";
 	}
@@ -91,13 +82,6 @@ public class ConsentIdController {
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<AccountResponse> respEntity = template.exchange(ACCOUNTS_URL, HttpMethod.GET, entityReq,
 				AccountResponse.class);
-
-		// Um den User im HTML auszugeben:
-
-		// LISTE unD HASH-MAP Gem MAURI 5.8.
-		// List<String> noteListMap = null;
-		// List<Account> accounts = null;
-		// Map<String, List<Balance>> noteListMap = new HashMap<>();
 
 		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
@@ -123,36 +107,16 @@ public class ConsentIdController {
 			log.debug("getBookedTransactions A " + getBookedTransactions);
 			log.debug("getBookedTransactions B " + currentAccount.getBalances());
 
-			// noteListMap.put("stand", currentAccount.getBalances());
-			// noteListMap.get(currentAccount);
-			// respEntity.getBody().getAccounts().add(currentAccount);
-
-			// log.debug("zeige RespEntity: " +
-			// respEntity.getBody().getAccounts().add(currentAccount));
 		}
-
-//		for (Account currentAccount : respEntity.getBody().getAccounts()) {
-//
-//			log.debug(currentAccount.getResourceId());
-//			accountDetails = getAccountDetails(currentAccount, consentId);
-//			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
-//			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
-//			currentAccount.setBalances(getbalancesFromAccount);
-//			currentAccount.setTransactions(getBookedTransactions);
-//		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
 		model.addAttribute("balances", respEntity.getBody().getBalances());
 		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
 		log.debug("die balances die ich haben kann: " + respEntity.getBody().getBalances());
 
-		// Wieso kann ich Werte nicht aus den get AdditionalPropeties holen? bezw. wie
-		// kann ich
-		// die Werte - aus der oberen Methode - im HTML abhohlen?
-		//
-		log.debug("FRAGE-MOTZ" + respEntity.getBody().getAdditionalProperties());
-
 		return "sites/showAccounts";
+
+		// return "sites/accountsDetail";
 
 	}
 
@@ -191,9 +155,6 @@ public class ConsentIdController {
 		ResponseEntity<BalancesResponse> respEntity = template.exchange(balancesUrl, HttpMethod.GET, entityReq,
 				BalancesResponse.class);
 
-		// log.debug("getBalancesFromAccoumt IN Methode" +
-		// respEntity.getBody().getBalances());
-
 		return respEntity.getBody().getBalances();
 	}
 
@@ -207,8 +168,6 @@ public class ConsentIdController {
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<AccountDetailResponse> respEntity = template.exchange(accountDetailUrl, HttpMethod.GET,
 				entityReq, AccountDetailResponse.class);
-
-//		log.debug("getAccountDetails: IN Methode  " + respEntity.getBody().getAccount().getResourceId());
 
 		return respEntity.getBody().getAccount();
 
@@ -237,7 +196,7 @@ public class ConsentIdController {
 		cr.setAccess(new Access());
 		cr.setRecurringIndicator(false);
 		cr.setValidUntil("2020-12-31");
-		cr.setFrequencyPerDay(4);
+		cr.setFrequencyPerDay(42);
 		cr.setCombinedServiceIndicator(false);
 		cr.getAccess().setAccounts(new ArrayList<Account>());
 		cr.getAccess().setBalances(new ArrayList<Balance>());
