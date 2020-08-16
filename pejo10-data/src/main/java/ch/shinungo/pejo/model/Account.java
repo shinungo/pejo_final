@@ -45,19 +45,16 @@ public class Account implements Serializable {
 	@JsonProperty("balances")
 	private List<Balance> balances = null;
 
-	// String closing Booked mit Getter und Setter
-
-	@JsonProperty("closingBooked")
-	public String closingBooked;
-
-	@JsonProperty("closingBooked")
-	public String getClosingBooked() {
-		return closingBooked;
-	}
-
-	@JsonProperty("closingBooked")
-	public void setClosingBooked(String closingBooked) {
-		this.closingBooked = closingBooked;
+	public String getClosingBookedAmount() {
+		if (balances == null) {
+			return null;
+		}
+		for (Balance balance : balances) {
+			if (balance.getBalanceType().equals("closingBooked")) {
+				return balance.getBalanceAmount().getAmount();
+			}
+		}
+		return null;
 	}
 
 	@JsonIgnore

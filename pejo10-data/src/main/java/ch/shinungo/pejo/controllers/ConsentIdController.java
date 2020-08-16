@@ -31,6 +31,7 @@ import ch.shinungo.pejo.model.BalancesResponse;
 import ch.shinungo.pejo.model.Booked;
 import ch.shinungo.pejo.model.ConsentRequest;
 import ch.shinungo.pejo.model.ConsentResponse;
+import ch.shinungo.pejo.model.Iban;
 import ch.shinungo.pejo.model.Transaction;
 import ch.shinungo.pejo.model.TransactionResponse;
 import ch.shinungo.pejo.repository.User;
@@ -55,7 +56,6 @@ public class ConsentIdController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = mapper.writeValueAsString(getConsentRequest(user.getIbans()));
-
 		HttpEntity<String> entityReq = new HttpEntity<String>(jsonInString, headers);
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<ConsentResponse> respEntity = template // Hier Zugriff angefragt.
@@ -95,25 +95,6 @@ public class ConsentIdController {
 
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
-
-			// ISt ja eigentlich doof, da er alle die Closest Booked's ja breits in
-			// getBookedTransactions reingetan hat.
-			// DANN Müsste die Methode genau in ZEILE 98 stehen.
-			// und es dürfte eigenlich nur "getClosingBooked" genommen werden...
-
-//			String closestBooked; 
-//			closestBooked = currentAccount.getClosingBooked(); 
-//
-//			for (Balance currentAmount : currentAccount.getBalances()) {
-//			
-//				if (currentAccount.getClosingBooked().equals(closestBooked)) {
-//					
-//					return currentAccount.getClosingBooked();
-//					
-//				}
-//			
-//			
-//			}	
 
 			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
 
@@ -206,7 +187,7 @@ public class ConsentIdController {
 		return headers;
 	}
 
-	private ConsentRequest getConsentRequest(List<String> ibans) {
+	private ConsentRequest getConsentRequest(List<Iban> ibans) {
 
 		ConsentRequest cr = new ConsentRequest();
 		cr.setAccess(new Access());
@@ -218,17 +199,17 @@ public class ConsentIdController {
 		cr.getAccess().setBalances(new ArrayList<Balance>());
 		cr.getAccess().setTransactions(new ArrayList<Transaction>());
 
-		for (String iban : ibans) {
+		for (Iban iban : ibans) {
 			Account a = new Account();
-			a.setIban(iban);
+			a.setIban(iban.getIbannumber());
 			cr.getAccess().getAccounts().add(a);
 
 			Balance b = new Balance();
-			b.setIban(iban);
+			b.setIban(iban.getIbannumber());
 			cr.getAccess().getBalances().add(b);
 
 			Transaction tra = new Transaction();
-			tra.setIban(iban);
+			tra.setIban(iban.getIbannumber());
 			cr.getAccess().getTransactions().add(tra);
 
 		}

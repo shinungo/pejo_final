@@ -1,7 +1,9 @@
 package ch.shinungo.pejo.repository;
 
-public interface UserRepository {// extends CrudRepository<User, Integer> {
+import org.springframework.data.repository.CrudRepository;
 
-	// public User findByUser(String name);
+public interface UserRepository extends CrudRepository<User, Long> {
+
+	public User findByName(String name);
 
 }

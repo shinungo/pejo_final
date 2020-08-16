@@ -14,9 +14,8 @@
 						<th>Amount</th>
 					</tr>
 
-					<th:block th:each="balance : ${account.balances}">
 						<tr>
-							<td th:text="${balance.balanceAmount.amount}" />
+							<td th:text="${account.closingBookedAmount}" />
 						</tr>
 			</table>
 		</div>

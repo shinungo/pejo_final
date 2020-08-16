@@ -6,3 +6,4 @@
 /schema.sql
 /static/
 /templates/
+/data-h2.sql
