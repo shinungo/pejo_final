@@ -88,16 +88,32 @@ public class ConsentIdController {
 			accountDetails = getAccountDetails(currentAccount, consentId);
 
 			log.debug("account Details: accountDetails" + accountDetails);
-			log.debug("account Details: Currency   " + accountDetails.getCurrency());
-			log.debug("account Details: CashA.Type " + accountDetails.getCashAccountType());
-			log.debug("account Details: IBAN       " + accountDetails.getIban());
-			log.debug("account Details: Name       " + accountDetails.getName());
+//			log.debug("account Details: Currency   " + accountDetails.getCurrency());
+//			log.debug("account Details: CashA.Type " + accountDetails.getCashAccountType());
+//			log.debug("account Details: IBAN       " + accountDetails.getIban());
+//			log.debug("account Details: Name       " + accountDetails.getName());
 
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
 
-			// noteListMap.put(accountDetails.getIban(), getbalancesFromAccount);
-			// log.debug("hier die noteListe" + noteListMap);
+			// ISt ja eigentlich doof, da er alle die Closest Booked's ja breits in
+			// getBookedTransactions reingetan hat.
+			// DANN Müsste die Methode genau in ZEILE 98 stehen.
+			// und es dürfte eigenlich nur "getClosingBooked" genommen werden...
+
+//			String closestBooked; 
+//			closestBooked = currentAccount.getClosingBooked(); 
+//
+//			for (Balance currentAmount : currentAccount.getBalances()) {
+//			
+//				if (currentAccount.getClosingBooked().equals(closestBooked)) {
+//					
+//					return currentAccount.getClosingBooked();
+//					
+//				}
+//			
+//			
+//			}	
 
 			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
 
@@ -110,9 +126,9 @@ public class ConsentIdController {
 		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
-		model.addAttribute("balances", respEntity.getBody().getBalances());
-		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
-		log.debug("die balances die ich haben kann: " + respEntity.getBody().getBalances());
+//		model.addAttribute("balances", respEntity.getBody().getBalances());
+//		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
+//		log.debug("die balances die ich haben kann: " + respEntity.getBody().getBalances());
 
 		return "sites/showAccounts";
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<div data-th-fragment="copy" class="amountsFromAccounts">
+
+		<div>
+			<table>
+					<tr>
+						<th>amountsfromAccounts </th>
+					</tr>
+
+						<th:block th:each="account : ${accounts}">
+					<tr>
+						<th>Amount</th>
+					</tr>
+
+					<th:block th:each="balance : ${account.balances}">
+						<tr>
+							<td th:text="${balance.balanceAmount.amount}" />
+						</tr>
+			</table>
+		</div>
+</html>

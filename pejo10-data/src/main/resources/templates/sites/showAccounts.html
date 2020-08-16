@@ -11,7 +11,6 @@
 			<a>Hier kommt der Name</a> <label th:text="${user}"></label>
 		</div>
 
-
 		<div>
 
 			<table>
@@ -32,7 +31,6 @@
 					</tr>
 			</table>
 		</div>
-
 
 		<h4>* * * * AB HIER ZUM BASTELN * * * *</h4>
 		<div>
@@ -64,43 +62,23 @@
 							<td th:text="${balance.balanceType}" />
 						</tr>
 					</th:block>
-
-
+<!-- 
 					<tr>
 							<th>Transaction ID</th>
 						</tr>
-
 					<th:block th:each="transaction : ${account.transactions}">
-	
 						<tr>
 							<td th:text="${transaction.transactionId}" />
-
 						</tr>
+						 -->
 					</th:block>
-
-
 			</table>
 		</div>
 
 
-
-
-		<!-- 
-            				<tr th:each="emp,iterStat : ${empList}">
-       <td th:text="${emp.id}">ID</td>
-       <td th:text="${accList[iterStat.index].field}">Emp Account</td> 
-</tr>.
-            				
-			<option th:each="account : ${accounts}"
-                            th:value="${account.iban}"
-                            th:utext="${user.name}"/>
-To Do 
-Accounts anzeigen. 
-Balance  & Transaction = Liste. 
-Für jedes Each ---- wieder ein Eacht machen. 
- -->
-
-
+	<div id="right_half_container">
+		<div th:replace="fragments/amountsFromAccounts :: copy"></div>
+	</div>
 
 		<div th:replace="fragments/footer :: copy"></div>
 </body>

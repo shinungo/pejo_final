@@ -15,7 +15,7 @@ import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "iban", "otherAccountIdentification", "currency", "resourceId", "product", "cashAccountType",
-		"name", "_links", "href"
+		"name", "_links", "href", "closingBooked"
 
 })
 @Data // DIES IST LOMCOK UND MACHT GETER SETTER 29.7.
@@ -45,8 +45,24 @@ public class Account implements Serializable {
 	@JsonProperty("balances")
 	private List<Balance> balances = null;
 
+	// String closing Booked mit Getter und Setter
+
+	@JsonProperty("closingBooked")
+	public String closingBooked;
+
+	@JsonProperty("closingBooked")
+	public String getClosingBooked() {
+		return closingBooked;
+	}
+
+	@JsonProperty("closingBooked")
+	public void setClosingBooked(String closingBooked) {
+		this.closingBooked = closingBooked;
+	}
+
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private final static long serialVersionUID = 2228834932433386726L;
 	private List<Booked> transactions = null;
+
 }
