@@ -96,13 +96,13 @@ public class ConsentIdController {
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
 
-			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
+//			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
 
 			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
 			currentAccount.setTransactions(getBookedTransactions);
 
-			log.debug("getBookedTransactions A " + getBookedTransactions);
-			log.debug("getBookedTransactions B " + currentAccount.getBalances());
+//			log.debug("getBookedTransactions A " + getBookedTransactions);
+//			log.debug("getBookedTransactions B " + currentAccount.getBalances());
 
 		}
 
