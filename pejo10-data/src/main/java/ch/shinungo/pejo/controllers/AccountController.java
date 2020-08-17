@@ -9,14 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AccountController {
 
-	// Nachtrag: vom 29.07.: Beweis für MOTZ:
-//	@RequestMapping(path = { "/showAccount", "sites/showAccount" })
-
 	@GetMapping(path = { "/showAccounts", "sites/showAccounts" })
 	public String showAccountHtml() {
-
-		log.debug("Account-Controller direkt angesteuert");
-
+		// log.debug("Account-Controller direkt angesteuert");
 		return "sites/showAccounts";
 	}
 }

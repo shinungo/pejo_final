@@ -2,69 +2,35 @@
 <html>
 <title>ConsentIdConfirmer</title>
 
-
-<div data-th-replace="fragments/head :: copy"></div>
+<div data-th-replace="fragments/head :: head"></div>
 
 <body>
+<div>
 
 <div th:replace="fragments/nav :: copy('consentIdConfirmer')"></div>
 
-
 	<div id="left_half_container">
-		 <h2>ConsentIdConfirmer</h2>
-			<a>Durch Clicken wird die ConsentID dem confirmationBankLink hinzugefügt.</a>
-			<a>Dieses muss im sich neu Oeffnenden Tab bestaetigt werden, so dass ..... </a>
-			</br>
-			
-			<h4>CurrentUSER???</h4>
-				<label th:text="${currentUser}"></label>
-	
-	<!-- 	MUSS ICH DEN USER AUCH SPEZIELL SPEICHERN; DAMIT ICH IHN AUSGEBEN KANN? 
-			<label th:text="${user.name}"></label>
-			
-				
-		
-		 -->
-		
-		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
-		</br>
-		
-		
-
-
-
+		<h2>ConsentIdConfirmer</h2>
+		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte
+			Bestätigen Sie den die Consent_ID</a> </br>
 
 		<div>
 			<h4>CONSENT ID der Aktuellen Session</h4>
 			<label th:text="${ConsentID}"></label>
-			<h4>Wenn Consent ID vorhanden: Get Accounts möglich</h4>
+			<h4>Wenn Consent ID vorhanden:</h4>
 			<div>
 				<a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
 			</div>
-			
-			<h4>CurrentUSER???</h4>
-				<label th:text="${currentUser}"></label>
-		</div>
 
-		<!--  
-		BEISPIELS EINES BUTTONS: 
-	<form th:action="@{/justAbutton}" th:object="${userForm}" method="POST">
-			<br> <input type="submit" value="justAbutton"></form>
- -->
- 
-		
+		</div>
 	</div>
 
-
-
-
-
-<div id="right_half_container">
+	<div id="right_half_container">
+		
 		<div th:replace="fragments/transactions :: copy"></div>
-	
 			</div>
 
     <div th:replace="fragments/footer :: copy"></div>
-    
+</div>    
 </body>
 </html>

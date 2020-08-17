@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-<title>UserChoice</title>
-<div data-th-replace="fragments/head :: copy"></div>
+<title>UserSelector</title>
+<div data-th-replace="fragments/head :: head"></div>
 
 <body>
 
+<div>
 	<div th:replace="fragments/nav :: copy('home')"></div>
+</div>
 
 	<div id="left_half_container">
-		<h2>User Selector</h2>
+		<h2>UserSelector</h2>
 		<form th:action="@{/getConsentId}" th:object="${userForm}"
 			method="POST">
 

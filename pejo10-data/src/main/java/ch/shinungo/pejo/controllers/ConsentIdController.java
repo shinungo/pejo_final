@@ -67,6 +67,7 @@ public class ConsentIdController {
 		model.addAttribute("ConsentID", respEntity.getBody().getConsentId());
 
 		return "sites/consentIdConfirmer";
+
 	}
 
 	@GetMapping({ "getAccounts" })
