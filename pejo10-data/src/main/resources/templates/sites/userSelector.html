@@ -2,13 +2,10 @@
 <html>
 <title>UserSelector</title>
 <div data-th-replace="fragments/head :: head"></div>
-
 <body>
-
 <div>
 	<div th:replace="fragments/nav :: copy('home')"></div>
 </div>
-
 	<div id="left_half_container">
 		<h2>UserSelector</h2>
 		<form th:action="@{/getConsentId}" th:object="${userForm}"
@@ -17,19 +14,14 @@
 			<label for="User">Choose a User:</label> <select th:field="*{name}"
 				name="User" id="user">
 
-
 				<option th:each="user : ${users}" th:value="${user.name}"
 					th:utext="${user.name}" />
 			</select> <br> <br> <input type="submit" value="getConsentId">
 		</form>
 	</div>
-
-
 	<div id="right_half_container">
-		<div th:replace="fragments/transactions :: copy"></div>
+		<div th:replace="fragments/descriptionsone :: copy"></div>
 	</div>
-
-
 	<div th:replace="fragments/footer :: copy"></div>
 </body>
 </html>

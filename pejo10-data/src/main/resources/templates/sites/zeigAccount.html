@@ -1,43 +1,23 @@
 <!DOCTYPE html>
 <html>
-<title>zeigAccount</title>
+<title>showAccount</title>
 <div data-th-replace="fragments/head :: head"></div>
 <body>
 
-<div th:replace="fragments/nav :: copy('zeigAccount')"></div>
-<div id="standardView">
+<div data-th-replace="fragments/nav :: copy('zeigAccount')"></div>
+	<div id="left_half_container">
 		<h1>Show Account</h1>
-		<div>
-
-
-
-
-
-		</div>
-
-		<div>
-		
-		
-		
-		
-		
-			<a th:href="${confirmationBanklink}" th:target="_blank">Bitte Bestätigen Sie den Call</a>
-		
-		
-		
-		
 			<div>
-				<a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
+				<a href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
 			</div>
-
-		</div>
-
-
-
-	<div id="right_half_container">
-		<div th:replace="fragments/amountsFromAccounts :: copy"></div>
 	</div>
 
+	<div id="right_half_container">
+		 <h1>Show Account</h1>
+			<div th:replace="fragments/transactionstwo :: copy"></div>
+	</div>
+	
 		<div th:replace="fragments/footer :: copy"></div>
+		
 </body>
 </html>

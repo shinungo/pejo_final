@@ -12,11 +12,9 @@
 	<div id="left_half_container">
 		<h2>ConsentIdConfirmer</h2>
 		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte
-			Bestätigen Sie den die Consent_ID</a> </br>
+			Bestätigen Sie den die Consent_ID</a> <br>
 
 		<div>
-			<h4>CONSENT ID der Aktuellen Session</h4>
-			<label th:text="${ConsentID}"></label>
 			<h4>Wenn Consent ID vorhanden:</h4>
 			<div>
 				<a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
@@ -27,7 +25,7 @@
 
 	<div id="right_half_container">
 		
-		<div th:replace="fragments/transactions :: copy"></div>
+		<div th:replace="fragments/descriptionstwo :: copy"></div>
 			</div>
 
     <div th:replace="fragments/footer :: copy"></div>

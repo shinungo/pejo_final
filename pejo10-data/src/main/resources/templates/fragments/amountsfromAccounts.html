@@ -8,12 +8,10 @@
 					<tr>
 						<th>amountsfromAccounts </th>
 					</tr>
-
 						<th:block th:each="account : ${accounts}">
 					<tr>
 						<th>Amount</th>
 					</tr>
-
 						<tr>
 							<td th:text="${account.closingBookedAmount}" />
 						</tr>

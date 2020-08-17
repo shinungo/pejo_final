@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Show Account Site</title>
+<title>showAccounts</title>
 <div data-th-replace="fragments/head :: head"></div>
 
 <body>
@@ -8,9 +8,6 @@
 	
 	<div id="standardView">
 		<h1>Show Account</h1>
-		<div>
-			<a>Hier kommt der Name</a> <label th:text="${user}"></label>
-		</div>
 
 		<div>
 
@@ -21,6 +18,7 @@
 						<th>Currency</th>
 						<th>Iban</th>
 						<th>Name</th>
+						<th>Betrag(closingBooked)</th>
 					</tr>
 				</thead>
 
@@ -29,10 +27,13 @@
 						<td th:text="${account.currency}" />
 						<td th:text="${account.iban}"/ >
 						<td th:text="${account.name}"/ >
+						<td th:text="${account.closingBookedAmount}" />
 					</tr>
 			</table>
 		</div>
 
+
+<!-- 
 		<h4>* * * * AB HIER ZUM BASTELN * * * *</h4>
 		<div>
 			<table>
@@ -63,24 +64,16 @@
 							<td th:text="${balance.balanceType}" />
 						</tr>
 					</th:block>
-<!-- 
-					<tr>
-							<th>Transaction ID</th>
-						</tr>
-					<th:block th:each="transaction : ${account.transactions}">
-						<tr>
-							<td th:text="${transaction.transactionId}" />
-						</tr>
-						 -->
-					</th:block>
 			</table>
 		</div>
+
 
 
 	<div id="right_half_container">
 		<div th:replace="fragments/amountsFromAccounts :: copy"></div>
 	</div>
-
+ -->
+ 
 		<div th:replace="fragments/footer :: copy"></div>
 </body>
 </html>
