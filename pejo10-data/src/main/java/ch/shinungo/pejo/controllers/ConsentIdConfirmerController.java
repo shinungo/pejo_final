@@ -16,15 +16,4 @@ public class ConsentIdConfirmerController {
 		log.debug("ConsentIdConfirmer direkt angesteuert");
 		return "sites/consentIdConfirmer";
 	}
-
-//	@PostMapping({ "justAbutton" })
-//	public String getAccounts(@ModelAttribute UserForm form, Model model) throws JsonProcessingException {
-//
-//		log.debug("justAbutton Pressed");
-//		return "sites/consentIdConfirmer";
-//
-//		// x-request und consent it
-//
-//	}
-
 }

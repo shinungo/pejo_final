@@ -87,34 +87,19 @@ public class ConsentIdController {
 		for (Account currentAccount : respEntity.getBody().getAccounts()) {
 
 			accountDetails = getAccountDetails(currentAccount, consentId);
-
 			log.debug("account Details: accountDetails" + accountDetails);
-//			log.debug("account Details: Currency   " + accountDetails.getCurrency());
-//			log.debug("account Details: CashA.Type " + accountDetails.getCashAccountType());
-//			log.debug("account Details: IBAN       " + accountDetails.getIban());
-//			log.debug("account Details: Name       " + accountDetails.getName());
 
 			List<Balance> getbalancesFromAccount = getbalancesFromAccount(accountDetails, consentId);
 			currentAccount.setBalances(getbalancesFromAccount);
 
-//			log.debug("get Balances 1 Balancens - CurrentAccount  " + currentAccount.getBalances());
-
 			List<Booked> getBookedTransactions = getTransactions(accountDetails, consentId);
 			currentAccount.setTransactions(getBookedTransactions);
-
-//			log.debug("getBookedTransactions A " + getBookedTransactions);
-//			log.debug("getBookedTransactions B " + currentAccount.getBalances());
 
 		}
 
 		model.addAttribute("accounts", respEntity.getBody().getAccounts());
-//		model.addAttribute("balances", respEntity.getBody().getBalances());
-//		log.debug("die Accounts die ich haben kann: " + respEntity.getBody().getAccounts());
-//		log.debug("die balances die ich haben kann: " + respEntity.getBody().getBalances());
 
 		return "sites/showAccounts";
-
-		// return "sites/accountsDetail";
 
 	}
 

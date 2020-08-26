@@ -6,7 +6,12 @@
 <body>
 	<div th:replace="fragments/nav :: copy('showAccounts')"></div>
 	
-	<div id="standardView">
+	
+	
+	
+	
+	
+	<div id="left_half_container">
 		<h1>Show Account</h1>
 
 		<div>
@@ -31,48 +36,13 @@
 					</tr>
 			</table>
 		</div>
-
-
-<!-- 
-		<h4>* * * * AB HIER ZUM BASTELN * * * *</h4>
-		<div>
-			<table>
-					<tr>
-						<th>Name</th>
-						<th>Iban</th>
-						<th>Currency</th>
-						<th>BalanceAmount</th>
-					</tr>
-						<th:block th:each="account : ${accounts}">
-					<tr>
-						<td th:text="${account.name}" />
-						<td th:text="${account.iban}" />
-						<td th:text="${account.currency}" />
-						<td th:text="${account.cashAccountType}" />
-						<td />
-					</tr>
-					<tr>
-						<th>Currency</th>
-						<th>Amount</th>
-						<th>Type</th>
-					</tr>
-
-					<th:block th:each="balance : ${account.balances}">
-						<tr>
-							<td th:text="${balance.balanceAmount.currency}" />
-							<td th:text="${balance.balanceAmount.amount}" />
-							<td th:text="${balance.balanceType}" />
-						</tr>
-					</th:block>
-			</table>
-		</div>
-
-
+	</div>
 
 	<div id="right_half_container">
-		<div th:replace="fragments/amountsFromAccounts :: copy"></div>
-	</div>
- -->
+		
+		<div th:replace="fragments/infothree :: copy"></div>
+			</div>
+
  
 		<div th:replace="fragments/footer :: copy"></div>
 </body>
