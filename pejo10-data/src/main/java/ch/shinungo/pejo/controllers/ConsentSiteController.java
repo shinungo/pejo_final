@@ -16,4 +16,5 @@ public class ConsentSiteController {
 		log.debug("ConsentIdConfirmer direkt angesteuert");
 		return "sites/consentIdConfirmer";
 	}
+	//Hier kleiner TESXT - 13.46 Uhr
 }
