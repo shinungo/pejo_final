@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<title>showAccounts</title>
+<div data-th-replace="fragments/head :: head"></div>
+
+<body>
+	<div th:replace="fragments/nav :: copy('showAccounts')"></div>
+	
+	
+	
+	
+	
+	
+	<div id="left_half_container">
+		<h1>Show Account</h1>
+
+		<div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Currency</th>
+						<th>Iban</th>
+						<th>Name</th>
+						<th>Betrag(closingBooked)</th>
+					</tr>
+				</thead>
+
+					<tr th:each="account : ${accounts}">
+						<td th:text="${account.cashAccountType}" />
+						<td th:text="${account.currency}" />
+						<td th:text="${account.iban}"/ >
+						<td th:text="${account.name}"/ >
+						<td th:text="${account.closingBookedAmount}" />
+					</tr>
+			</table>
+		</div>
+	</div>
+
+	<div id="right_half_container">
+		
+		<div th:replace="fragments/infothree :: copy"></div>
+			</div>
+
+ 
+		<div th:replace="fragments/footer :: copy"></div>
+</body>
+</html>

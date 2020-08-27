@@ -16,7 +16,7 @@ public class UserSelectorController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping({ "getConsentId", "/", "/start", "/home" })
+	@GetMapping({ "getConsentId", "/", "/start", "/home", "userSelector" })
 
 	public String showUserSelector(Model model) {
 		model.addAttribute("userForm", new UserForm());

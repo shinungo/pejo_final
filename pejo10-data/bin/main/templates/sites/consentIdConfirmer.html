@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<title>ConsentIdConfirmer</title>
+
+<div data-th-replace="fragments/head :: head"></div>
+
+<body>
+<div>
+
+<div th:replace="fragments/nav :: copy('consentIdConfirmer')"></div>
+
+	<div id="left_half_container">
+		<h2>ConsentIdConfirmer</h2>
+		<a th:href="${confirmationBanklink}" th:target="_blank">Bitte
+			Bestätigen Sie den die Consent_ID</a> <br>
+
+		<div>
+			<h4>Wenn Consent ID vorhanden:</h4>
+			<div>
+				<a th:href="'/getAccounts?consentId=' + ${ConsentID}">GetAccounts</a>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="right_half_container">
+		
+		<div th:replace="fragments/descriptionstwo :: copy"></div>
+			</div>
+
+    <div th:replace="fragments/footer :: copy"></div>
+</div>    
+</body>
+</html>
