@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.shinungo.pejo.form.UserForm;
 import ch.shinungo.pejo.model.Access;
 import ch.shinungo.pejo.model.Account;
 import ch.shinungo.pejo.model.AccountDetailResponse;
@@ -35,6 +34,7 @@ import ch.shinungo.pejo.model.Iban;
 import ch.shinungo.pejo.model.Transaction;
 import ch.shinungo.pejo.model.TransactionResponse;
 import ch.shinungo.pejo.repository.User;
+import ch.shinungo.pejo.service.UserForm;
 import ch.shinungo.pejo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 

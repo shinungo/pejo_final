@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class ConsentSiteController {
+public class DirectSiteController {
 
 	public ConsentIdController consentIdController;
 
@@ -15,5 +15,11 @@ public class ConsentSiteController {
 	public String showConsentIdConfirmerHtml() {
 		log.debug("ConsentIdConfirmer direkt angesteuert");
 		return "sites/consentIdConfirmer";
+	}
+	
+	@GetMapping(path = { "/showAccounts", "sites/showAccounts" })
+	public String showAccountHtml() {
+		log.debug("Account-Controller direkt angesteuert");
+		return "sites/showAccounts";
 	}
 }

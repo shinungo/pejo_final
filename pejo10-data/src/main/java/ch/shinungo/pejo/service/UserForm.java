@@ -1,4 +1,4 @@
-package ch.shinungo.pejo.form;
+package ch.shinungo.pejo.service;
 
 import lombok.Getter;
 import lombok.Setter;

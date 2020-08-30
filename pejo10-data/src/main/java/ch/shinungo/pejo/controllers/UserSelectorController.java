@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import ch.shinungo.pejo.form.UserForm;
+import ch.shinungo.pejo.service.UserForm;
 import ch.shinungo.pejo.service.UserService;
 import lombok.Data;
 
