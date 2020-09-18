@@ -6,11 +6,6 @@
 <body>
 	<div th:replace="fragments/nav :: copy('showAccounts')"></div>
 	
-	
-	
-	
-	
-	
 	<div id="left_half_container">
 		<h1>Show Account</h1>
 
@@ -19,20 +14,20 @@
 			<table>
 				<thead>
 					<tr>
+						<th>Name</th>
 						<th>Type</th>
 						<th>Currency</th>
 						<th>Iban</th>
-						<th>Name</th>
 						<th>Betrag</th>
 					</tr>
 				</thead>
 
 					<tr th:each="account : ${accounts}">
-						<td th:text="${account.cashAccountType}" />
+						<td th:text="${account.name}"/>
+						<td th:text="${account.cashAccountType}"/>
 						<td th:text="${account.currency}" />
-						<td th:text="${account.iban}"/ >
-						<td th:text="${account.name}"/ >
-						<td th:text="${account.closingBookedAmount}" />
+						<td th:text="${account.iban}"/>
+						<td th:text="${account.closingBookedAmount}"/>
 					</tr>
 			</table>
 		</div>
