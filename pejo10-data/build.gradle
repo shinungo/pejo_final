@@ -26,6 +26,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-jdbc')
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	
 	implementation 'org.apache.httpcomponents:httpcore:4.4.1'
